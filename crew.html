@@ -1,78 +1,83 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Crew | Fiducia</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Crew List</title>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div class="topbar">
-    <div class="brand">
-      FIDUCIA
-      <span class="sub">COLLECTIVE</span>
-    </div>
-  </div>
+  <div class="container">
+    <header class="header">
+      <div class="logo-text">
+        FIDUCIA<br/>
+        <span class="small">COLLECTIVE</span>
+      </div>
 
-  <nav class="nav">
-    <a href="index.html">메인</a>
-    <a href="ai-stillcut.html">AI 스틸컷(예약)</a>
-    <a href="equipment.html">장비 예약</a>
-    <a href="crew.html" class="active">감독/스태프 리스트</a>
-    <a href="#register">감독/스태프 등록</a>
-  </nav>
+      <nav class="nav">
+        <a href="./index.html">메인</a>
+        <a href="./ai-stillcut.html">AI 스틸컷(예약)</a>
+        <a class="active" href="./crew.html">감독/스태프 리스트</a>
+      </nav>
+    </header>
 
-  <main class="container">
+    <section class="section">
+      <h2 class="section-title">crew</h2>
 
-    <section class="card">
-      <div class="section-title" style="margin-top:0;">crew</div>
-
-      <div class="row-2">
-        <div>
+      <div class="crew-controls">
+        <div class="full">
           <label>이름/키워드 검색</label>
-          <input id="searchInput" placeholder="이름, 역할, 스킬 등 검색"/>
+          <input id="searchInput" placeholder="이름, 역할, 스킬 등 검색" />
         </div>
 
         <div>
-          <label>메인 역할</label>
+          <label>Skill</label>
+          <select id="skillFilter">
+            <option value="">Skill 전체</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Role</label>
           <select id="roleFilter">
             <option value="">Role 전체</option>
-            <option value="director">director</option>
-            <option value="staff">staff</option>
           </select>
         </div>
       </div>
-
-      <div style="height:8px;"></div>
-
-      <div class="section-title" style="text-align:left;font-size:20px;">Directors</div>
-      <div id="directorsList" class="list"></div>
-
-      <div class="section-title" style="text-align:left;font-size:20px;margin-top:22px;">Staff</div>
-      <div id="staffList" class="list"></div>
-
-      <div id="crewStatus" class="notice" style="margin-top:12px;">불러오는 중…</div>
     </section>
 
-    <section id="register" class="card">
-      <div class="section-title" style="margin-top:0;">crew register</div>
-      <p class="section-sub">
-        감독/스태프 등록은 면접 후 승인 방식입니다.<br/>
-        아래 버튼으로 지원 정보를 **개인 카톡(나에게)** 으로 보내주세요.
-      </p>
+    <section class="section">
+      <h3 style="margin:0 0 10px;">Directors</h3>
+      <div id="directorsList" class="list"></div>
+    </section>
 
-      <button id="kakaoApplyBtn" class="hero cta" style="width:100%;padding:16px 0;">
+    <section class="section">
+      <h3 style="margin:0 0 10px;">Staff</h3>
+      <div id="staffList" class="list"></div>
+    </section>
+
+    <section class="section">
+      <h3 style="margin:0 0 8px;">crew register</h3>
+      <div class="help" style="text-align:center;margin-bottom:10px;">
+        감독/스태프 등록은 면접 후 리스트에 노출됩니다.<br/>
+        아래 버튼으로 지원 정보를 **개인 카톡**으로 보내주세요.
+      </div>
+
+      <!-- 카카오톡 링크: 너 개인 카톡용 -->
+      <a id="kakaoApplyBtn" class="btn primary" href="#" target="_blank">
         카톡으로 지원정보 보내기
-      </button>
+      </a>
 
-      <div class="notice" style="margin-top:12px;">
+      <div class="help" style="margin-top:10px;text-align:center;">
         보내야 할 정보: 이름 / 역할(감독 or 스태프) / 스킬 / 포폴 링크 / 연락처 / 간단 소개
       </div>
     </section>
 
-  </main>
+    <footer class="footer">
+      © Fiducia Collective
+    </footer>
+  </div>
 
-  <footer>© Fiducia Collective</footer>
-  <script src="js/crew.js"></script>
+  <script src="./js/crew.js"></script>
 </body>
 </html>

@@ -1,78 +1,49 @@
-// js/stillcut.js
 const form = document.getElementById("stillcutForm");
-const submitStatus = document.getElementById("submitStatus");
-const fileInput = form.elements["images"];
-const fileListEl = document.getElementById("fileList");
+const statusEl = document.getElementById("stillcutStatus");
 
-function showStatus(msg, type=""){
-  submitStatus.style.display = "block";
-  submitStatus.className = "notice " + type;
-  submitStatus.textContent = msg;
+function filesToMeta(files){
+  if(!files || files.length === 0) return [];
+  return Array.from(files).slice(0,5).map(f => ({
+    name: f.name,
+    size: f.size,
+    type: f.type
+  }));
 }
-
-function readFilesMeta(files){
-  const arr = [];
-  for(const f of files){
-    arr.push({
-      name: f.name,
-      size: f.size,
-      type: f.type
-    });
-  }
-  return arr.slice(0,5);
-}
-
-fileInput.addEventListener("change", ()=>{
-  const files = readFilesMeta(fileInput.files || []);
-  if(!files.length){
-    fileListEl.style.display="none";
-    return;
-  }
-  fileListEl.style.display="block";
-  fileListEl.innerHTML = files.map(f=>{
-    const kb = Math.round(f.size/1024);
-    return `• ${f.name} (${kb}KB)`;
-  }).join("<br/>");
-});
 
 form.addEventListener("submit", async (e)=>{
   e.preventDefault();
-  showStatus("전송 중…");
+  statusEl.textContent = "전송 중...";
 
   const fd = new FormData(form);
 
   const payload = {
     projectTitle: fd.get("projectTitle"),
-    phone: fd.get("phone"),
     email: fd.get("email"),
+    phone: fd.get("phone"),
     videoType: fd.get("videoType"),
-    runtime: Number(fd.get("runtime")),
+    runtime: fd.get("runtime"),
     budget: fd.get("budget"),
     shootDate: fd.get("shootDate"),
     location: fd.get("location"),
-    referenceLink: fd.get("referenceLink") || "",
+    referenceLink: fd.get("referenceLink"),
     message: fd.get("message"),
-    imagesMeta: readFilesMeta(fileInput.files || [])
+    imagesMeta: filesToMeta(fd.getAll("images"))
   };
 
   try{
-    const res = await fetch("/.netlify/functions/notion-stillcut",{
+    const res = await fetch("/.netlify/functions/notion-stillcut", {
       method:"POST",
       headers:{ "Content-Type":"application/json" },
       body: JSON.stringify(payload)
     });
 
-    const data = await res.json().catch(()=> ({}));
+    const data = await res.json();
+    if(!res.ok) throw new Error(data?.error || "Notion stillcut error");
 
-    if(!res.ok){
-      throw new Error(data.details || data.message || "Notion stillcut error");
-    }
-
-    showStatus("예약 완료! 곧 연락드릴게요 🙌", "success");
+    statusEl.textContent = "예약 완료! 확인 후 연락드릴게요.";
     form.reset();
-    fileListEl.style.display="none";
   }catch(err){
     console.error(err);
-    showStatus("예약 실패: Notion stillcut error", "error");
+    statusEl.textContent = "예약 실패: " + err.message;
   }
 });

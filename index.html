@@ -1,41 +1,46 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Fiducia Collective</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
-  <div class="topbar">
-    <div class="brand">
-      FIDUCIA
-      <span class="sub">COLLECTIVE</span>
-    </div>
+  <div class="container">
+    <header class="header">
+      <div class="logo-text">
+        FIDUCIA<br/>
+        <span class="small">COLLECTIVE</span>
+      </div>
+
+      <nav class="nav">
+        <a class="active" href="./index.html">메인</a>
+        <a href="./ai-stillcut.html">AI 스틸컷(예약)</a>
+        <a href="./crew.html">감독/스태프 리스트</a>
+      </nav>
+    </header>
+
+    <section class="section hero">
+      <h1>신뢰를 디자인하는<br/>프로덕션 플랫폼</h1>
+      <p>Trust isn't what follows art. It's where art begins.</p>
+      <a class="cta" href="./crew.html">Director's Market</a>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">recent work</h2>
+      <div class="help" style="text-align:center">
+        노션에서 Published 체크된 작업을 불러옵니다.
+      </div>
+      <!-- 나중에 포트폴리오 영역 넣을 자리 -->
+      <div style="height:180px;"></div>
+    </section>
+
+    <footer class="footer">
+      © Fiducia Collective
+    </footer>
   </div>
 
-  <nav class="nav">
-    <a href="index.html" class="active">메인</a>
-    <a href="ai-stillcut.html">AI 스틸컷(예약)</a>
-    <a href="equipment.html">장비 예약</a>
-    <a href="crew.html">감독/스태프 리스트</a>
-    <a href="crew.html#register">감독/스태프 등록</a>
-  </nav>
-
-  <main class="container">
-    <section class="hero">
-      <h1>신뢰를<br/>디자인하는<br/>프로덕션 플랫폼</h1>
-      <p>Trust isn't what follows art. It's where art begins.</p>
-      <a class="cta" href="crew.html">Director's Market</a>
-    </section>
-
-    <section class="card">
-      <div class="section-title" style="text-align:left;font-size:20px;margin:0 0 8px;">recent work</div>
-      <div class="section-sub" style="text-align:left;margin:0 0 10px;">노션에서 Published 체크된 작업을 불러옵니다.</div>
-      <div id="recentWork" class="notice">연결 준비중…</div>
-    </section>
-  </main>
-
-  <footer>© Fiducia Collective</footer>
+  <script src="./js/main.js"></script>
 </body>
 </html>

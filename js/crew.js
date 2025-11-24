@@ -1,107 +1,90 @@
-// js/crew.js
 const directorsList = document.getElementById("directorsList");
 const staffList = document.getElementById("staffList");
-const crewStatus = document.getElementById("crewStatus");
 const searchInput = document.getElementById("searchInput");
+const skillFilter = document.getElementById("skillFilter");
 const roleFilter = document.getElementById("roleFilter");
 const kakaoApplyBtn = document.getElementById("kakaoApplyBtn");
 
-let allDirectors = [];
-let allStaff = [];
+// ✅ 너 개인 카톡 링크로 바꿔줘 (오픈채팅 or 1:1 링크)
+const KAKAO_LINK = "https://open.kakao.com/o/xxxxxxxx"; 
+kakaoApplyBtn.href = KAKAO_LINK;
 
-function escapeHtml(s=""){
-  return s.replace(/[&<>"']/g, m => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
-  }[m]));
+let crew = [];
+
+function uniq(arr){ return [...new Set(arr.filter(Boolean))]; }
+
+function render(){
+  const q = searchInput.value.trim().toLowerCase();
+  const sf = skillFilter.value;
+  const rf = roleFilter.value;
+
+  const filtered = crew.filter(p=>{
+    const hay = [
+      p.name, p.mainRole, ...(p.roles||[]), ...(p.skills||[]), p.bio
+    ].join(" ").toLowerCase();
+
+    if(q && !hay.includes(q)) return false;
+    if(sf && !(p.skills||[]).includes(sf)) return false;
+    if(rf && !(p.roles||[]).includes(rf) && p.mainRole !== rf) return false;
+    return true;
+  });
+
+  const directors = filtered.filter(p=>p.mainRole==="director");
+  const staffs = filtered.filter(p=>p.mainRole!=="director");
+
+  directorsList.innerHTML = directors.length ? directors.map(card).join("") : `<div class="help">Director 없음</div>`;
+  staffList.innerHTML = staffs.length ? staffs.map(card).join("") : `<div class="help">Staff 없음</div>`;
 }
 
-function renderPerson(p){
-  const initials = (p.name||"?").slice(0,1);
-  const skills = (p.skills||[]).map(x=>`<span class="badge">${escapeHtml(x)}</span>`).join("");
-  const roles = (p.roles||[]).map(x=>`<span class="badge">${escapeHtml(x)}</span>`).join("");
+function card(p){
+  const tags = [...(p.roles||[]), ...(p.skills||[])].map(t=>`<span class="tag">${t}</span>`).join("");
+  const insta = p.instagram ? `<a href="${p.instagram}" target="_blank" class="tag">Instagram</a>` : "";
+  const phone = p.phone ? `<span class="tag">${p.phone}</span>` : "";
+  const email = p.email ? `<span class="tag">${p.email}</span>` : "";
 
   return `
-    <div class="person">
-      <div class="avatar">
-        ${p.profileImage ? `<img src="${p.profileImage}" alt="${escapeHtml(p.name)}"/>` : initials}
-      </div>
-      <div class="meta">
-        <div class="name">${escapeHtml(p.name)}</div>
-        <div class="badges">
-          ${p.mainRole ? `<span class="badge">${escapeHtml(p.mainRole)}</span>` : ""}
-          ${roles}
-          ${skills}
-        </div>
-        ${p.bio ? `<div style="color:var(--muted);font-size:13px;margin-top:4px;">${escapeHtml(p.bio)}</div>` : ""}
-        <div style="color:var(--muted);font-size:12px;margin-top:4px;">
-          ${p.instagram ? `IG: <a href="${p.instagram}" target="_blank">${p.instagram}</a>` : ""}
-          ${p.phone ? ` · ${p.phone}` : ""}
-          ${p.email ? ` · ${p.email}` : ""}
-        </div>
+    <div class="card">
+      <div class="name">${p.name}</div>
+      ${p.bio? `<div class="help" style="margin-top:6px;">${p.bio}</div>`:""}
+      <div class="tags" style="margin-top:8px;">
+        ${tags}
+        ${insta}
+        ${phone}
+        ${email}
       </div>
     </div>
   `;
 }
 
-function applyFilter(){
-  const q = (searchInput.value||"").toLowerCase().trim();
-  const rf = roleFilter.value;
-
-  const filterFn = (p) => {
-    if (rf && (p.mainRole||"").toLowerCase() !== rf) return false;
-    if (!q) return true;
-    const hay = [
-      p.name, p.mainRole, ...(p.roles||[]), ...(p.skills||[]), p.bio
-    ].join(" ").toLowerCase();
-    return hay.includes(q);
-  };
-
-  directorsList.innerHTML = allDirectors.filter(filterFn).map(renderPerson).join("") || 
-    `<div class="notice">Director 없음</div>`;
-  staffList.innerHTML = allStaff.filter(filterFn).map(renderPerson).join("") || 
-    `<div class="notice">Staff 없음</div>`;
-}
-
 async function loadCrew(){
-  crewStatus.textContent = "불러오는 중…";
+  directorsList.innerHTML = staffList.innerHTML = "불러오는 중...";
   try{
     const res = await fetch("/.netlify/functions/notion-crew");
-    if(!res.ok) throw new Error("network");
     const data = await res.json();
+    if(!res.ok) throw new Error(data?.error || "Notion crew fetch error");
 
-    allDirectors = data.directors || [];
-    allStaff = data.staff || [];
+    crew = data.items || [];
 
-    applyFilter();
-    crewStatus.textContent = `Directors ${allDirectors.length}명 · Staff ${allStaff.length}명`;
-  }catch(e){
-    crewStatus.innerHTML = `<span class="error">crew 불러오기 실패</span>`;
-    directorsList.innerHTML = `<div class="notice error">crew 불러오기 실패</div>`;
-    staffList.innerHTML = `<div class="notice error">crew 불러오기 실패</div>`;
-    console.error(e);
+    // 필터 옵션 채우기
+    const allSkills = uniq(crew.flatMap(c=>c.skills||[]));
+    const allRoles = uniq(crew.flatMap(c=>[c.mainRole, ...(c.roles||[])]));
+
+    allSkills.forEach(s=>{
+      const opt=document.createElement("option"); opt.value=s; opt.textContent=s; skillFilter.appendChild(opt);
+    });
+    allRoles.forEach(r=>{
+      const opt=document.createElement("option"); opt.value=r; opt.textContent=r; roleFilter.appendChild(opt);
+    });
+
+    render();
+  }catch(err){
+    console.error(err);
+    directorsList.innerHTML = staffList.innerHTML = `<div class="help">crew 불러오기 실패</div>`;
   }
 }
 
-searchInput.addEventListener("input", applyFilter);
-roleFilter.addEventListener("change", applyFilter);
-
-// 카톡 버튼: 개인 카톡(나에게)로 보내는 UX
-kakaoApplyBtn.addEventListener("click", ()=>{
-  // 카카오톡 설치된 환경이면 공유창으로 넘길 수 있는데,
-  // 외부 SDK 없이 "복사 + 카톡 보내기"가 가장 안꼬이는 방식.
-  const template =
-`[Fiducia Crew 지원]
-이름:
-역할(감독/스태프):
-스킬:
-포트폴리오 링크:
-연락처:
-간단 소개:`;
-  navigator.clipboard.writeText(template).then(()=>{
-    alert("지원 템플릿을 복사했어요. 개인 카톡(나에게)에 붙여넣어 보내주세요!");
-  }).catch(()=>{
-    alert("복사 실패. 아래 텍스트를 수동으로 복사해 카톡(나에게)에 보내주세요:\n\n"+template);
-  });
-});
+searchInput.addEventListener("input", render);
+skillFilter.addEventListener("change", render);
+roleFilter.addEventListener("change", render);
 
 loadCrew();

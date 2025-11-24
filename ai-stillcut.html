@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>AI Stillcut Reservation | Fiducia</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      FIDUCIA
+      <span class="sub">COLLECTIVE</span>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="index.html">메인</a>
+    <a href="ai-stillcut.html" class="active">AI 스틸컷(예약)</a>
+    <a href="equipment.html">장비 예약</a>
+    <a href="crew.html">감독/스태프 리스트</a>
+    <a href="crew.html#register">감독/스태프 등록</a>
+  </nav>
+
+  <main class="container">
+    <section class="card">
+      <div class="section-title" style="margin-top:0;">ai stillcut reservation</div>
+      <p class="section-sub">필수 정보를 남기면 노션 DB에 저장됩니다.</p>
+
+      <form id="stillcutForm">
+
+        <div>
+          <label>프로젝트명 *</label>
+          <input name="projectTitle" required placeholder="예: 00웨딩 스틸컷"/>
+        </div>
+
+        <div class="row-2">
+          <div>
+            <label>연락처(전화) *</label>
+            <input name="phone" required placeholder="010-0000-0000"/>
+          </div>
+          <div>
+            <label>이메일 *</label>
+            <input name="email" type="email" required placeholder="email@example.com"/>
+          </div>
+        </div>
+
+        <div class="row-2">
+          <div>
+            <label>영상 타입 *</label>
+            <select name="videoType" required>
+              <option value="">선택</option>
+              <option>Wedding</option>
+              <option>Commercial</option>
+              <option>Music Video</option>
+              <option>Film</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>러닝타임(분) *</label>
+            <input name="runtime" type="number" min="1" required placeholder="예: 5"/>
+          </div>
+        </div>
+
+        <div>
+          <label>예산 범위 *</label>
+          <select name="budget" required>
+            <option value="">선택</option>
+            <option>50만원 ~ 100만원</option>
+            <option>100만원 ~ 200만원</option>
+            <option>200만원 ~ 300만원</option>
+            <option>300만원 이상</option>
+          </select>
+        </div>
+
+        <div class="row-2">
+          <div>
+            <label>희망 촬영 날짜 *</label>
+            <input name="shootDate" type="date" required/>
+          </div>
+          <div>
+            <label>촬영 장소 *</label>
+            <input name="location" required placeholder="예: 부산 / 서울 / 해외"/>
+          </div>
+        </div>
+
+        <div>
+          <label>레퍼런스 링크 (드라이브/유튜브/핀터레스트 등)</label>
+          <input name="referenceLink" type="url" placeholder="https://..."/>
+        </div>
+
+        <div>
+          <label>이미지 파일 (최대 5개)</label>
+          <input name="images" type="file" accept="image/*" multiple/>
+          <div class="notice" style="margin-top:6px;">
+            파일은 노션에 **메타정보(파일명/용량)** 만 저장됩니다.  
+            원본은 카톡/드라이브 링크로 전달 부탁!
+          </div>
+          <div id="fileList" class="notice" style="margin-top:6px; display:none;"></div>
+        </div>
+
+        <div>
+          <label>요청 내용 *</label>
+          <textarea name="message" required placeholder="원하는 느낌/톤/특이사항"></textarea>
+        </div>
+
+        <button class="hero cta" type="submit" style="width:100%;padding:16px 0;">예약 제출</button>
+
+        <div id="submitStatus" class="notice" style="display:none;"></div>
+      </form>
+    </section>
+  </main>
+
+  <footer>© Fiducia Collective</footer>
+  <script src="js/stillcut.js"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>장비 예약 – TRUST PRODUCTION</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">TRUST PRODUCTION</div>
+    <nav>
+      <a href="index.html">HOME</a>
+      <a href="equipment.html">장비 예약</a>
+      <a href="ai-stillcut.html">AI 스틸컷</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <h1>장비 예약</h1>
+      <p>
+        1인 촬영 또는 소규모 팀 촬영에 필요한 카메라 / 렌즈 / 조명 / 짐벌
+        패키지를 날짜·시간 단위로 예약하는 폼입니다.
+      </p>
+    </section>
+
+    <section class="card">
+      <form id="equip-form">
+        <label>이름</label>
+        <input
+          id="name"
+          required
+          placeholder="신청자 이름"
+        />
+
+        <label>연락처</label>
+        <input
+          id="phone"
+          required
+          placeholder="010-0000-0000"
+        />
+
+        <label>촬영 날짜</label>
+        <input
+          id="date"
+          type="date"
+          required
+        />
+
+        <label>시간대</label>
+        <input
+          id="time"
+          required
+          placeholder="예: 10:00 ~ 18:00"
+        />
+
+        <label>장비 패키지</label>
+        <select id="package">
+          <option value="FX3 + 기본렌즈 + 짐벌">
+            FX3 + 기본렌즈 + 짐벌
+          </option>
+          <option value="FX3 + 시그마 아트 + 짐벌 + 무선마이크">
+            FX3 + 시그마 아트 + 짐벌 + 무선마이크
+          </option>
+          <option value="카메라 없이 조명/짐벌만">
+            카메라 없이 조명/짐벌만
+          </option>
+          <option value="커스텀 요청">커스텀 요청</option>
+        </select>
+
+        <label>요청사항</label>
+        <textarea
+          id="message"
+          placeholder="픽업 위치, 세트, 촬영 컨셉 등"
+        ></textarea>
+
+        <button
+          type="button"
+          id="equip-submit"
+        >
+          장비 예약 보내기
+        </button>
+      </form>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("equip-form");
+      const btn = document.getElementById("equip-submit");
+
+      btn.addEventListener("click", async function () {
+        const data = {
+          name: document.getElementById("name").value,
+          phone: document.getElementById("phone").value,
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
+          package: document.getElementById("package").value,
+          message: document.getElementById("message").value,
+        };
+
+        if (!data.name || !data.phone || !data.date || !data.time) {
+          alert("이름 / 연락처 / 날짜 / 시간은 필수입니다.");
+          return;
+        }
+
+        try {
+          const res = await fetch("/.netlify/functions/equipment-reserve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+          if (result.ok) {
+            alert("장비 예약이 접수되었습니다.");
+            form.reset();
+          } else {
+            alert("서버 오류가 발생했습니다. 다시 시도해 주세요.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("연결 오류입니다. 잠시 후 다시 시도해 주세요.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

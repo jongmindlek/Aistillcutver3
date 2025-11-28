@@ -1,33 +1,44 @@
-const form = document.querySelector("#reservation-form");
+// netlify/functions/reserve.js
 
-form.addEventListener("submit", async (e) => {
-  e.preventDefault(); // ★ 새로고침 방지
+const { Client } = require("@notionhq/client");
 
-  const data = {
-    name: document.querySelector("#name").value,
-    phone: document.querySelector("#phone").value,
-    date: document.querySelector("#date").value,
-    time: document.querySelector("#time").value,
-    message: document.querySelector("#message").value,
-  };
+exports.handler = async function (event, context) {
+  // POST가 아니면 거절
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      body: JSON.stringify({ ok: false, error: "Method Not Allowed" }),
+    };
+  }
 
   try {
-    const res = await fetch("/api/reserve", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+    const body = JSON.parse(event.body || "{}");
+    const { name, phone, date, time, message } = body;
+
+    const notion = new Client({ auth: process.env.NOTION_KEY });
+
+    await notion.pages.create({
+      parent: { database_id: process.env.NOTION_DB },
+      properties: {
+        이름: { title: [{ text: { content: name || "" } }] },
+        연락처: { rich_text: [{ text: { content: phone || "" } }] },
+        날짜: date
+          ? { date: { start: date } }
+          : undefined,
+        시간: { rich_text: [{ text: { content: time || "" } }] },
+        요청사항: { rich_text: [{ text: { content: message || "" } }] },
+      },
     });
 
-    const result = await res.json();
-
-    if (result.ok) {
-      alert("예약이 정상적으로 등록되었습니다!");
-      form.reset();
-    } else {
-      alert("오류가 발생했습니다. 다시 시도해주세요.");
-    }
-  } catch (err) {
-    console.error(err);
-    alert("서버 연결 오류");
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true }),
+    };
+  } catch (error) {
+    console.error("Reserve function error:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ ok: false, error: error.message }),
+    };
   }
-});
+};

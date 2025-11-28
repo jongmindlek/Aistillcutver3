@@ -7,28 +7,63 @@
 </head>
 
 <body>
-
-  <h2>예약하기</h2>
+  <h1>예약하기</h1>
 
   <form id="reservation-form">
-    <label>이름</label>
-    <input type="text" id="name" required />
+    <label>이름</label><br />
+    <input id="name" required /><br /><br />
 
-    <label>전화번호</label>
-    <input type="text" id="phone" required />
+    <label>전화번호</label><br />
+    <input id="phone" required /><br /><br />
 
-    <label>예약 날짜</label>
-    <input type="date" id="date" required />
+    <label>날짜</label><br />
+    <input id="date" type="date" required /><br /><br />
 
-    <label>예약 시간</label>
-    <input type="time" id="time" required />
+    <label>시간</label><br />
+    <input id="time" type="time" required /><br /><br />
 
-    <label>요청사항</label>
-    <textarea id="message"></textarea>
+    <label>요청사항</label><br />
+    <textarea id="message" placeholder="요청사항을 적어주세요"></textarea><br /><br />
 
     <button type="submit">예약 제출</button>
   </form>
 
-  <script src="/reservation.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("reservation-form");
+
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault(); // ✅ 새로고침 막기
+
+        const data = {
+          name: document.getElementById("name").value,
+          phone: document.getElementById("phone").value,
+          date: document.getElementById("date").value,
+          time: document.getElementById("time").value,
+          message: document.getElementById("message").value,
+        };
+
+        try {
+          const res = await fetch("/.netlify/functions/reserve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await res.json();
+
+          if (result.ok) {
+            alert("예약이 성공적으로 등록되었습니다!");
+            form.reset();
+          } else {
+            alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("연결 오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        }
+      });
+    });
+  </script>
 </body>
 </html>

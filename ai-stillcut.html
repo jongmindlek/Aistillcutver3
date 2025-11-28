@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Stillcut</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>AI 스틸컷 – TRUST PRODUCTION</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <header>
     <div class="logo">TRUST PRODUCTION</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index.html">HOME</a>
       <a href="equipment.html">장비 예약</a>
       <a href="ai-stillcut.html">AI 스틸컷</a>
     </nav>
@@ -23,63 +24,61 @@
 
     <section class="card">
       <form id="ai-form">
-
         <label>프로젝트 제목</label>
-        <input id="ProjectTitle" placeholder="Project Title" />
+        <input id="ProjectTitle" placeholder="예: 광고 영상" />
 
         <label>전화번호</label>
         <input id="Phone" placeholder="010-0000-0000" />
 
         <label>이메일</label>
-        <input id="Email" placeholder="your@email.com" />
+        <input id="Email" placeholder="email@domain.com" />
 
         <label>Video Type</label>
-        <input id="VideoType" placeholder="Ex: 브랜딩 필름 / 룩북" />
+        <input id="VideoType" placeholder="예: 브랜딩 필름" />
 
         <label>러닝타임</label>
-        <input id="Runtime" placeholder="Ex: 30초" />
+        <input id="Runtime" placeholder="예: 20초" />
 
         <label>예산</label>
-        <input id="Budget" placeholder="Ex: 300 ~ 400" />
+        <input id="Budget" placeholder="예: 300~400" />
 
         <label>Shoot Date</label>
         <input id="ShootDate" type="date" />
 
         <label>Location</label>
-        <input id="Location" placeholder="Ex: 서울 성수" />
+        <input id="Location" placeholder="예: 서울 성수" />
 
         <label>Reference Link</label>
-        <input id="ReferenceLink" placeholder="링크" />
+        <input id="ReferenceLink" placeholder="링크 입력" />
 
         <label>Message</label>
         <textarea id="Message"></textarea>
 
         <button type="button" id="ai-submit">AI 요청하기</button>
-
       </form>
     </section>
   </main>
 
   <script>
     document.getElementById("ai-submit").addEventListener("click", async () => {
-      const data = {
-        Title: "AI Stillcut Request",
-        ProjectTitle: document.getElementById("ProjectTitle").value,
-        Phone: document.getElementById("Phone").value,
-        Email: document.getElementById("Email").value,
-        VideoType: document.getElementById("VideoType").value,
-        Runtime: document.getElementById("Runtime").value,
-        Budget: document.getElementById("Budget").value,
-        ShootDate: document.getElementById("ShootDate").value,
-        Location: document.getElementById("Location").value,
-        ReferenceLink: document.getElementById("ReferenceLink").value,
-        Message: document.getElementById("Message").value
+      const body = {
+        Title: "AI Request",
+        ProjectTitle: ProjectTitle.value,
+        Phone: Phone.value,
+        Email: Email.value,
+        VideoType: VideoType.value,
+        Runtime: Runtime.value,
+        Budget: Budget.value,
+        ShootDate: ShootDate.value,
+        Location: Location.value,
+        ReferenceLink: ReferenceLink.value,
+        Message: Message.value
       };
 
       const res = await fetch("/.netlify/functions/ai-stillcut-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       const json = await res.json();

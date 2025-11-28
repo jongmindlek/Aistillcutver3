@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gear Reservation</title>
-  <link rel="stylesheet" href="styles.css" />
+  <title>장비 예약 – TRUST PRODUCTION</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <div class="logo">TRUST PRODUCTION</div>
     <nav>
-      <a href="index.html">Home</a>
+      <a href="index.html">HOME</a>
       <a href="equipment.html">장비 예약</a>
       <a href="ai-stillcut.html">AI 스틸컷</a>
     </nav>
@@ -19,52 +19,51 @@
   <main>
     <section class="card">
       <h1>장비 예약</h1>
+      <p>기본 장비 패키지 또는 커스텀 장비 요청을 입력해주세요.</p>
     </section>
 
     <section class="card">
       <form id="equip-form">
 
         <label>프로젝트명</label>
-        <input id="ProjectName" placeholder="ex) 브랜드필름 촬영" />
+        <input id="ProjectName" placeholder="예: 브랜드 필름 촬영" />
 
         <label>대여자 이름</label>
-        <input id="RenterName" placeholder="ex) 홍길동" />
+        <input id="RenterName" placeholder="예: 홍길동" />
 
         <label>연락처</label>
         <input id="Contact" placeholder="010-0000-0000" />
 
-        <label>장비 정보</label>
-        <input id="Gear" placeholder="ex) FX3 + 짐벌 + 라이트" />
+        <label>장비 구성 (Gear)</label>
+        <input id="Gear" placeholder="FX3 + 짐벌 + 라이트" />
 
         <label>촬영 날짜</label>
         <input id="Date" type="date" />
 
         <label>메모</label>
-        <textarea id="Memo" placeholder="요청 사항 입력"></textarea>
+        <textarea id="Memo" placeholder="요청 사항"></textarea>
 
         <button type="button" id="equip-submit">장비 예약하기</button>
-
       </form>
     </section>
   </main>
 
   <script>
     document.getElementById("equip-submit").addEventListener("click", async () => {
-
-      const data = {
+      const body = {
         Title: "Gear Reservation",
-        Gear: document.getElementById("Gear").value,
-        RenterName: document.getElementById("RenterName").value,
-        ProjectName: document.getElementById("ProjectName").value,
-        Date: document.getElementById("Date").value,
-        Contact: document.getElementById("Contact").value,
-        Memo: document.getElementById("Memo").value
+        ProjectName: ProjectName.value,
+        RenterName: RenterName.value,
+        Contact: Contact.value,
+        Gear: Gear.value,
+        Date: Date.value,
+        Memo: Memo.value
       };
 
       const res = await fetch("/.netlify/functions/equipment-reserve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       const json = await res.json();

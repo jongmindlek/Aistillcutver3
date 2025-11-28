@@ -1,46 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Fiducia Collective</title>
-  <link rel="stylesheet" href="./style.css" />
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>TRUST PRODUCTION – 메인</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <header class="header">
-      <div class="logo-text">
-        FIDUCIA<br/>
-        <span class="small">COLLECTIVE</span>
-      </div>
+  <header>
+    <div class="logo">TRUST PRODUCTION</div>
+    <nav>
+      <a href="index.html">HOME</a>
+      <a href="equipment.html">장비 예약</a>
+      <a href="ai-stillcut.html">AI 스틸컷</a>
+    </nav>
+  </header>
 
-      <nav class="nav">
-        <a class="active" href="./index.html">메인</a>
-        <a href="./ai-stillcut.html">AI 스틸컷(예약)</a>
-        <a href="./crew.html">감독/스태프 리스트</a>
-      </nav>
-    </header>
-
-    <section class="section hero">
-      <h1>신뢰를 디자인하는<br/>프로덕션 플랫폼</h1>
-      <p>Trust isn't what follows art. It's where art begins.</p>
-      <a class="cta" href="./crew.html">Director's Market</a>
+  <main>
+    <section class="card">
+      <h1>프리랜서 영상 프로덕션 플랫폼</h1>
+      <p>
+        감독·촬영·조명 프리랜서를 빠르게 매칭하고, AI 스틸컷으로 결과물을
+        미리 확인할 수 있는 TRUST PRODUCTION 베이스 버전입니다.
+      </p>
     </section>
 
-    <section class="section">
-      <h2 class="section-title">recent work</h2>
-      <div class="help" style="text-align:center">
-        노션에서 Published 체크된 작업을 불러옵니다.
+    <section class="card">
+      <h2>원하는 서비스 선택</h2>
+      <p>체크박스를 눌러서 필요한 서비스 설명을 펼쳐보세요.</p>
+
+      <div class="checkbox-row">
+        <label>
+          <input
+            type="checkbox"
+            id="cb-equipment"
+          />
+          장비 예약
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="cb-director"
+          />
+          감독·스태프 예약
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="cb-ai"
+          />
+          AI 스틸컷
+        </label>
       </div>
-      <!-- 나중에 포트폴리오 영역 넣을 자리 -->
-      <div style="height:180px;"></div>
+
+      <div id="section-equipment" class="hidden">
+        <h3>장비 예약</h3>
+        <p>
+          카메라, 조명, 짐벌 등 1인 촬영에 최적화된 패키지를 날짜·시간
+          단위로 예약합니다. 세팅 정보는 장비 예약 페이지에서 직접 입력할 수
+          있습니다.
+        </p>
+        <p><a href="equipment.html">👉 장비 예약 페이지로 이동</a></p>
+      </div>
+
+      <div id="section-director" class="hidden">
+        <h3>감독·스태프 예약</h3>
+        <p>
+          촬영 감독, 조명 감독, 현장 스태프를 프로젝트 단위로 요청할 수 있는
+          기능입니다. 현재는 기획 중으로, 추후 별도 페이지로 분리 예정입니다.
+        </p>
+      </div>
+
+      <div id="section-ai" class="hidden">
+        <h3>AI 스틸컷</h3>
+        <p>
+          원하는 무드 레퍼런스를 업로드하거나 링크로 보내면, AI가 스타일을
+          분석해 예상 스틸컷을 생성하고, 그 스타일에 맞는 감독 후보를 추천하는
+          기능입니다.
+        </p>
+        <p><a href="ai-stillcut.html">👉 AI 스틸컷 페이지로 이동</a></p>
+      </div>
     </section>
 
-    <footer class="footer">
-      © Fiducia Collective
-    </footer>
-  </div>
+    <section class="card">
+      <h2>연락처</h2>
+      <p>인스타그램 DM 또는 이메일로 문의 주세요.</p>
+      <p>Instagram: @fiducia.collective</p>
+      <p>Email: example@trust-production.com</p>
+    </section>
+  </main>
 
-  <script src="./js/main.js"></script>
+  <script>
+    // 메인 체크박스 토글
+    document.addEventListener("DOMContentLoaded", function () {
+      const cbEquipment = document.getElementById("cb-equipment");
+      const cbDirector = document.getElementById("cb-director");
+      const cbAi = document.getElementById("cb-ai");
+
+      const secEquipment = document.getElementById("section-equipment");
+      const secDirector = document.getElementById("section-director");
+      const secAi = document.getElementById("section-ai");
+
+      cbEquipment.addEventListener("change", function () {
+        secEquipment.classList.toggle("hidden", !cbEquipment.checked);
+      });
+
+      cbDirector.addEventListener("change", function () {
+        secDirector.classList.toggle("hidden", !cbDirector.checked);
+      });
+
+      cbAi.addEventListener("change", function () {
+        secAi.classList.toggle("hidden", !cbAi.checked);
+      });
+    });
+  </script>
 </body>
 </html>

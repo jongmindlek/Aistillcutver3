@@ -9,7 +9,8 @@
 <body>
   <h1>예약하기</h1>
 
-  <form id="reservation-form">
+  <!-- form 이지만, 기본 제출은 안 쓰고 모양만 쓴다 -->
+  <form id="reservation-form" onsubmit="return false;">
     <label>이름</label><br />
     <input id="name" required /><br /><br />
 
@@ -25,16 +26,17 @@
     <label>요청사항</label><br />
     <textarea id="message" placeholder="요청사항을 적어주세요"></textarea><br /><br />
 
-    <button type="submit">예약 제출</button>
+    <!-- ★ type="button" 으로 바꾼게 핵심 : 이 버튼은 절대 폼을 제출하지 않음 -->
+    <button type="button" id="reserve-btn">예약 제출</button>
   </form>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const form = document.getElementById("reservation-form");
+      const button = document.getElementById("reserve-btn");
 
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault(); // ✅ 새로고침 막기
-
+      button.addEventListener("click", async function () {
+        // 여기서는 더 이상 e.preventDefault() 필요 없음 (폼 제출 자체를 안 쓰니까)
         const data = {
           name: document.getElementById("name").value,
           phone: document.getElementById("phone").value,
@@ -42,6 +44,12 @@
           time: document.getElementById("time").value,
           message: document.getElementById("message").value,
         };
+
+        // 간단한 유효성 체크 (이름/전화/날짜/시간 비었을 때 막기)
+        if (!data.name || !data.phone || !data.date || !data.time) {
+          alert("이름, 전화번호, 날짜, 시간을 모두 입력해 주세요.");
+          return;
+        }
 
         try {
           const res = await fetch("/.netlify/functions/reserve", {
@@ -54,7 +62,7 @@
 
           if (result.ok) {
             alert("예약이 성공적으로 등록되었습니다!");
-            form.reset();
+            form.reset(); // 화면만 비워줌, 새로고침 아님
           } else {
             alert("서버 오류가 발생했습니다. 다시 시도해주세요.");
           }

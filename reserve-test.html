@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>예약 테스트</title>
+</head>
+<body>
+  <h1>예약 TEST 페이지</h1>
+
+  <button type="button" id="test-btn">예약 버튼</button>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const btn = document.getElementById("test-btn");
+
+      btn.addEventListener("click", function () {
+        alert("버튼 클릭됨! (새로고침 되면 안 됨)");
+      });
+    });
+  </script>
+</body>
+</html>

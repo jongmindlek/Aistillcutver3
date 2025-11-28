@@ -2,18 +2,15 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <title>AI 스틸컷 – TRUST PRODUCTION</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Stillcut</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header>
     <div class="logo">TRUST PRODUCTION</div>
     <nav>
-      <a href="index.html">HOME</a>
+      <a href="index.html">Home</a>
       <a href="equipment.html">장비 예약</a>
       <a href="ai-stillcut.html">AI 스틸컷</a>
     </nav>
@@ -21,107 +18,73 @@
 
   <main>
     <section class="card">
-      <h1>AI 스틸컷 의뢰</h1>
-      <p>
-        원하는 무드의 레퍼런스(이미지 링크 또는 영상 링크)를 보내주시면,
-        AI가 스타일을 분석해 예상 스틸컷과 어울리는 감독 후보를 추천하는
-        서비스입니다.
-      </p>
+      <h1>AI 스틸컷 요청</h1>
     </section>
 
     <section class="card">
       <form id="ai-form">
-        <label>클라이언트명 / 브랜드명</label>
-        <input
-          id="client"
-          required
-          placeholder="예: FIDUCIA COLLECTIVE"
-        />
 
-        <label>연락처 (이메일 또는 전화번호)</label>
-        <input
-          id="contact"
-          required
-          placeholder="예: email@domain.com 또는 010-0000-0000"
-        />
+        <label>프로젝트 제목</label>
+        <input id="ProjectTitle" placeholder="Project Title" />
 
-        <label>프로젝트 유형</label>
-        <select id="projectType">
-          <option value="브랜딩 필름">브랜딩 필름</option>
-          <option value="웨딩 영상">웨딩 영상</option>
-          <option value="패션 / 룩북">패션 / 룩북</option>
-          <option value="뮤직비디오">뮤직비디오</option>
-          <option value="SNS 숏폼 광고">SNS 숏폼 광고</option>
-          <option value="기타">기타</option>
-        </select>
+        <label>전화번호</label>
+        <input id="Phone" placeholder="010-0000-0000" />
 
-        <label>참고 레퍼런스 링크</label>
-        <input
-          id="refUrl"
-          placeholder="Pinterest / Instagram / Youtube / 이미지 링크 등"
-        />
+        <label>이메일</label>
+        <input id="Email" placeholder="your@email.com" />
 
-        <label>스타일 / 무드 설명</label>
-        <textarea
-          id="styleDesc"
-          placeholder="예: 필름톤, 인물 위주, 자연광, 감성적인 연기, 네온 조명 등 최대한 자세히"
-        ></textarea>
+        <label>Video Type</label>
+        <input id="VideoType" placeholder="Ex: 브랜딩 필름 / 룩북" />
 
-        <label>희망 마감일</label>
-        <input
-          id="due"
-          type="date"
-        />
+        <label>러닝타임</label>
+        <input id="Runtime" placeholder="Ex: 30초" />
 
-        <button
-          type="button"
-          id="ai-submit"
-        >
-          AI 스틸컷 의뢰 보내기
-        </button>
+        <label>예산</label>
+        <input id="Budget" placeholder="Ex: 300 ~ 400" />
+
+        <label>Shoot Date</label>
+        <input id="ShootDate" type="date" />
+
+        <label>Location</label>
+        <input id="Location" placeholder="Ex: 서울 성수" />
+
+        <label>Reference Link</label>
+        <input id="ReferenceLink" placeholder="링크" />
+
+        <label>Message</label>
+        <textarea id="Message"></textarea>
+
+        <button type="button" id="ai-submit">AI 요청하기</button>
+
       </form>
     </section>
   </main>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const form = document.getElementById("ai-form");
-      const btn = document.getElementById("ai-submit");
+    document.getElementById("ai-submit").addEventListener("click", async () => {
+      const data = {
+        Title: "AI Stillcut Request",
+        ProjectTitle: document.getElementById("ProjectTitle").value,
+        Phone: document.getElementById("Phone").value,
+        Email: document.getElementById("Email").value,
+        VideoType: document.getElementById("VideoType").value,
+        Runtime: document.getElementById("Runtime").value,
+        Budget: document.getElementById("Budget").value,
+        ShootDate: document.getElementById("ShootDate").value,
+        Location: document.getElementById("Location").value,
+        ReferenceLink: document.getElementById("ReferenceLink").value,
+        Message: document.getElementById("Message").value
+      };
 
-      btn.addEventListener("click", async function () {
-        const data = {
-          client: document.getElementById("client").value,
-          contact: document.getElementById("contact").value,
-          projectType: document.getElementById("projectType").value,
-          refUrl: document.getElementById("refUrl").value,
-          styleDesc: document.getElementById("styleDesc").value,
-          due: document.getElementById("due").value,
-        };
-
-        if (!data.client || !data.contact) {
-          alert("클라이언트명과 연락처는 필수입니다.");
-          return;
-        }
-
-        try {
-          const res = await fetch("/.netlify/functions/ai-stillcut-request", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          });
-
-          const result = await res.json();
-          if (result.ok) {
-            alert("AI 스틸컷 의뢰가 접수되었습니다.");
-            form.reset();
-          } else {
-            alert("서버 오류가 발생했습니다. 다시 시도해 주세요.");
-          }
-        } catch (err) {
-          console.error(err);
-          alert("연결 오류입니다. 잠시 후 다시 시도해 주세요.");
-        }
+      const res = await fetch("/.netlify/functions/ai-stillcut-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
+
+      const json = await res.json();
+      if (json.ok) alert("AI 요청 완료!");
+      else alert("오류 발생!");
     });
   </script>
 </body>

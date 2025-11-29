@@ -37,8 +37,8 @@
           <span class="accent">fiducia collective</span>
         </h1>
         <p class="hero-desc">
-          프리랜서 감독·촬영·조명 네트워크와 실무적인 프로덕션 운영을 한 데 묶어,<br />
-          브랜드의 신뢰를 설계하는 영상들을 만듭니다.  
+          프리랜서 감독·촬영·조명 네트워크와 실무 프로덕션 운영을 한 데 묶어,<br />
+          브랜드의 신뢰를 설계하는 영상들을 만듭니다.<br />
           “급한데 퀄리티도 포기 못 할 때” 떠올려질 팀을 목표로 합니다.
         </p>
         <div class="hero-meta">
@@ -50,97 +50,24 @@
     </section>
 
     <main>
-      <!-- SERVICES / TOGGLE -->
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">서비스 선택</div>
-            <div class="card-sub">
-              fiducia collective가 지금 제공하는 기능들이에요. 필요한 것만 골라 써도 됩니다.
-            </div>
-          </div>
-        </div>
-
-        <div class="checkbox-row">
-          <label class="checkbox-pill">
-            <input type="checkbox" id="cb-equipment" />
-            장비 예약
-          </label>
-          <label class="checkbox-pill">
-            <input type="checkbox" id="cb-director" />
-            감독·스태프
-          </label>
-          <label class="checkbox-pill">
-            <input type="checkbox" id="cb-ai" />
-            AI 스틸컷
-          </label>
-        </div>
-
-        <div id="section-equipment" class="hidden" style="margin-top: 10px;">
-          <h3 style="margin: 0 0 6px; font-size: 15px;">장비 예약 · Gear Reservation</h3>
-          <p class="card-sub" style="margin-bottom: 6px;">
-            FX3, 짐벌, 조명, 오디오까지. 1인 촬영부터 소규모 팀까지,  
-            이미 검증된 셋업을 날짜·시간 단위로 예약할 수 있습니다.
-          </p>
-          <p class="card-sub">
-            <a href="equipment.html">👉 장비 예약 페이지로 이동</a>
-          </p>
-        </div>
-
-        <div id="section-director" class="hidden" style="margin-top: 10px;">
-          <h3 style="margin: 0 0 6px; font-size: 15px;">감독·스태프 매칭</h3>
-          <p class="card-sub">
-            장비만으로는 안 되는 부분들. 톤을 이해하는 감독, 손이 빠른 촬영,  
-            현장을 정리해주는 조명·스태프를 프로젝트 단위로 매칭합니다.  
-            Verified Director 컨셉으로, 납기와 커뮤니케이션을 데이터로 쌓고 있어요.
-          </p>
-        </div>
-
-        <div id="section-ai" class="hidden" style="margin-top: 10px;">
-          <h3 style="margin: 0 0 6px; font-size: 15px;">AI 스틸컷 · 스타일 프리뷰</h3>
-          <p class="card-sub" style="margin-bottom: 6px;">
-            레퍼런스 링크와 프로젝트 정보를 입력하면, AI가 톤·무드·색감을 분석해서  
-            예상 스틸컷과 어울리는 감독 스타일을 제안합니다.
-          </p>
-          <p class="card-sub">
-            <a href="ai-stillcut.html">👉 AI 스틸컷 요청 페이지로 이동</a>
-          </p>
-        </div>
-      </section>
-
-      <!-- WORKS -->
+      <!-- WORKS (Notion 연동 리스트) -->
       <section class="card">
         <div class="card-header">
           <div>
             <div class="card-title">WORKS</div>
             <div class="card-sub">
-              fiducia collective가 지향하는 톤을 보여주는 대표 작업들입니다.
+              fiducia collective에서 실제로 작업한 / 작업 중인 프로젝트들입니다.
+              (Notion WORK DB에서 자동으로 불러옵니다)
             </div>
           </div>
         </div>
 
-        <div class="form-meta-grid">
-          <div class="form-meta-item">
-            <span class="label">BRAND FILM</span>
-            <span class="value">도심 한가운데서, 브랜드의 속도를 보여주는 45초 시퀀스.</span>
-          </div>
-          <div class="form-meta-item">
-            <span class="label">WEDDING STORY</span>
-            <span class="value">둘만 아는 디테일을 중심으로 재구성한 감정 중심 웨딩 필름.</span>
-          </div>
-          <div class="form-meta-item">
-            <span class="label">FASHION / LOOKBOOK</span>
-            <span class="value">룩의 질감과 모델의 리듬을 강조한 미니멀 무빙 룩북.</span>
-          </div>
-          <div class="form-meta-item">
-            <span class="label">MUSIC / INDIE PROJECT</span>
-            <span class="value">로우한 조명과 핸드헬드 무드로 밀어붙인 인디 뮤직비디오.</span>
-          </div>
+        <div id="works-list">
+          <p class="card-sub">작업 목록을 불러오는 중입니다…</p>
         </div>
 
         <p class="footer-note">
-          실제 레퍼런스 영상 링크(YouTube / Vimeo / 노션)를 연결하고 싶다면  
-          위 텍스트를 &lt;a href="링크"&gt; ... &lt;/a&gt; 로 감싸주기만 하면 됩니다.
+          WORKS용 Notion DB에 새 프로젝트를 추가하면 이 화면에도 자동으로 반영됩니다.
         </p>
       </section>
 
@@ -152,7 +79,7 @@
             <div class="card-sub">어디서부터 시작해야 할지 모를 때, 여기로 주세요.</div>
           </div>
         </div>
-        <p class="card-sub">Instagram · @fiducia.collective (사용 중인 계정으로 교체 가능)</p>
+        <p class="card-sub">Instagram · @fiducia.collective (사용 중인 계정으로 교체)</p>
         <p class="card-sub">Email · contact@fiducia-collective.com (실제 메일로 교체)</p>
         <p class="footer-note">
           “이 무드로 우리 브랜드 영상 가능할까?” 같은 가벼운 질문부터  
@@ -163,24 +90,71 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const cbEquipment = document.getElementById("cb-equipment");
-      const cbDirector = document.getElementById("cb-director");
-      const cbAi = document.getElementById("cb-ai");
+    // Notion WORKS 불러오기
+    document.addEventListener("DOMContentLoaded", async () => {
+      const container = document.getElementById("works-list");
 
-      const secEquipment = document.getElementById("section-equipment");
-      const secDirector = document.getElementById("section-director");
-      const secAi = document.getElementById("section-ai");
+      try {
+        const res = await fetch("/.netlify/functions/works-list");
+        const json = await res.json();
 
-      cbEquipment.addEventListener("change", () => {
-        secEquipment.classList.toggle("hidden", !cbEquipment.checked);
-      });
-      cbDirector.addEventListener("change", () => {
-        secDirector.classList.toggle("hidden", !cbDirector.checked);
-      });
-      cbAi.addEventListener("change", () => {
-        secAi.classList.toggle("hidden", !cbAi.checked);
-      });
+        if (!json.ok) {
+          container.innerHTML =
+            '<p class="card-sub">WORKS를 불러오는 중 오류가 발생했습니다.</p>';
+          return;
+        }
+
+        const items = json.items || [];
+        if (!items.length) {
+          container.innerHTML =
+            '<p class="card-sub">아직 등록된 WORK가 없습니다. Notion WORK DB에 프로젝트를 추가해 주세요.</p>';
+          return;
+        }
+
+        const grid = document.createElement("div");
+        grid.className = "form-meta-grid";
+
+        items.forEach((item) => {
+          const div = document.createElement("div");
+          div.className = "form-meta-item";
+
+          const labelSpan = document.createElement("span");
+          labelSpan.className = "label";
+          labelSpan.textContent =
+            (item.type || "PROJECT") +
+            (item.year ? " · " + item.year : "");
+
+          const valueSpan = document.createElement("span");
+          valueSpan.className = "value";
+
+          let text = "";
+          if (item.client) text += "[" + item.client + "] ";
+          text += item.title || "Untitled";
+
+          if (item.url) {
+            const a = document.createElement("a");
+            a.href = item.url;
+            a.target = "_blank";
+            a.rel = "noopener noreferrer";
+            a.textContent = text;
+            valueSpan.appendChild(a);
+          } else {
+            valueSpan.textContent = text;
+          }
+
+          div.appendChild(labelSpan);
+          div.appendChild(valueSpan);
+
+          grid.appendChild(div);
+        });
+
+        container.innerHTML = "";
+        container.appendChild(grid);
+      } catch (e) {
+        console.error(e);
+        container.innerHTML =
+          '<p class="card-sub">WORKS를 불러오는 중 네트워크 오류가 발생했습니다.</p>';
+      }
     });
   </script>
 </body>

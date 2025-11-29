@@ -1,211 +1,180 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Stillcut 예약 – fiducia collective</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="app-shell">
-    <header>
-      <div class="logo-wrap">
-        <div class="logo-mark"><span></span></div>
-        <div class="logo-text">
-          <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
-          <div class="logo-text-sub">AI STILLCUT · 스타일 프리뷰 예약</div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>AI 스틸컷 예약 | Fiducia Collective</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <!-- 상단 네비게이션 -->
+      <header class="fc-header">
+        <div class="fc-logo-text">
+          <div class="fc-logo-main">FIDUCIA</div>
+          <div class="fc-logo-sub">COLLECTIVE</div>
         </div>
-      </div>
-      <nav>
-        <a href="index.html">HOME</a>
-        <a href="equipment.html">GEAR</a>
-        <a href="ai-stillcut.html" class="active">AI STILLCUT</a>
-      </nav>
+        <nav class="fc-nav">
+          <a href="index.html" class="fc-nav-pill">메인</a>
+          <a href="ai-stillcut.html" class="fc-nav-pill fc-nav-pill--active">AI 스틸컷(예약)</a>
+          <a href="crew.html" class="fc-nav-pill">감독/스태프 리스트</a>
+        </nav>
+      </header>
 
-      <!-- 스틸컷 서브 네비 -->
-      <div class="subnav">
-        <button class="subnav-button active" data-scroll="#stillcut-reserve">
-          바로 예약하기
-        </button>
-        <button class="subnav-button" data-link="ai-stillcut-result.html">
-          AI 스틸컷 확인하기
-        </button>
-      </div>
-    </header>
+      <main class="fc-main">
+        <section class="fc-card fc-card--wide">
+          <h1 class="fc-section-title">AI 스틸컷 예약</h1>
 
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-pill">
-          <span class="hero-pill-dot"></span>
-          AI 스틸컷 신청 / 예약 폼
-        </div>
-        <h1 class="hero-title">
-          촬영 전에,<br />
-          우리 영상의 한 장면을 먼저 보는 예약.
-        </h1>
-        <p class="hero-desc">
-          이 폼은 <strong>AI 스틸컷 제작 + 감독/장비/샷팅 추천</strong>을 예약하는 창구입니다.<br />
-          제출 후, 결과 화면에서 추천 감독 / 추천 장비 / 추천 샷팅 / 예상 스틸컷 / 예상 가격을 확인할 수 있어요.
-        </p>
-        <div class="hero-meta">
-          <span>1) 프로젝트 정보 입력</span>
-          <span>2) 레퍼런스 & 무드 공유</span>
-          <span>3) 결과 화면에서 제안 확인</span>
-        </div>
-      </div>
-    </section>
-
-    <main>
-      <section class="card" id="stillcut-reserve">
-        <div class="card-header">
-          <div>
-            <div class="card-title">AI 스틸컷 예약 폼</div>
-            <div class="card-sub">
-              정확한 정보일수록 더 정교한 결과가 나옵니다.<br />
-              모든 항목을 다 채우지 않아도 제출할 수 있어요.
-            </div>
-          </div>
-        </div>
-
-        <form id="ai-form">
-          <div class="input-group">
-            <label>프로젝트 제목 (Project Title)</label>
-            <input
-              id="ProjectTitle"
-              placeholder="예: 브랜드 필름 / 앨범 티저 / 룩북 / 웨딩 필름"
-            />
-          </div>
-
-          <div class="form-two-cols">
-            <div class="input-group">
-              <label>전화번호 (Phone)</label>
-              <input id="Phone" placeholder="010-0000-0000" />
-            </div>
-            <div class="input-group">
-              <label>이메일 (Email)</label>
-              <input id="Email" placeholder="email@domain.com" />
-            </div>
-          </div>
-
-          <div class="form-two-cols">
-            <div class="input-group">
-              <label>Video Type</label>
+          <form id="stillcutForm" class="fc-form">
+            <!-- 기본 정보 -->
+            <div class="fc-form-row">
+              <label for="projectTitle">프로젝트명 *</label>
               <input
-                id="VideoType"
-                placeholder="예: 브랜딩 / 웨딩 / 패션 / MV / 다큐"
+                id="projectTitle"
+                name="projectTitle"
+                type="text"
+                placeholder="예: 웨딩 식전영상"
+                required
               />
             </div>
-            <div class="input-group">
-              <label>러닝타임 (Runtime)</label>
-              <input id="Runtime" placeholder="예: 30초 / 1분 / 3분" />
-            </div>
-          </div>
 
-          <div class="form-two-cols">
-            <div class="input-group">
-              <label>예산 (Budget)</label>
-              <input id="Budget" placeholder="예: 300~500만 원 / 미정" />
+            <div class="fc-form-row fc-form-row--2col">
+              <div>
+                <label for="email">이메일 *</label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder="you@email.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="phone">연락처(전화) *</label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  placeholder="010-0000-0000"
+                  required
+                />
+              </div>
             </div>
-            <div class="input-group">
-              <label>예상 촬영일 (Shoot Date)</label>
-              <input id="ShootDate" type="date" />
-            </div>
-          </div>
 
-          <div class="form-two-cols">
-            <div class="input-group">
-              <label>촬영 지역 (Location)</label>
-              <input id="Location" placeholder="예: 서울 성수 / 부산 해운대 / 해외" />
+            <!-- 영상 정보 -->
+            <div class="fc-form-row fc-form-row--2col">
+              <div>
+                <label for="videoType">영상 타입 *</label>
+                <select id="videoType" name="videoType" required>
+                  <option value="">선택</option>
+                  <option value="웨딩">웨딩</option>
+                  <option value="식전영상">식전영상</option>
+                  <option value="브랜디드 필름">브랜디드 필름</option>
+                  <option value="뮤직비디오">뮤직비디오</option>
+                  <option value="커머셜">커머셜</option>
+                  <option value="다큐멘터리">다큐멘터리</option>
+                  <option value="기타">기타</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="runtime">러닝타임 *</label>
+                <select id="runtime" name="runtime" required>
+                  <option value="">선택</option>
+                  <option value="30초">30초</option>
+                  <option value="1분">1분</option>
+                  <option value="1~3분">1~3분</option>
+                  <option value="3~5분">3~5분</option>
+                  <option value="5분 이상">5분 이상</option>
+                </select>
+              </div>
             </div>
-            <div class="input-group">
-              <label>Reference Link</label>
+
+            <div class="fc-form-row fc-form-row--2col">
+              <div>
+                <label for="budget">예산 범위 *</label>
+                <select id="budget" name="budget" required>
+                  <option value="">선택</option>
+                  <option value="50만원 ~ 100만원">50만원 ~ 100만원</option>
+                  <option value="100만원 ~ 200만원">100만원 ~ 200만원</option>
+                  <option value="200만원 ~ 300만원">200만원 ~ 300만원</option>
+                  <option value="300만원 이상">300만원 이상</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="shootDate">희망 촬영 날짜 *</label>
+                <input
+                  id="shootDate"
+                  name="shootDate"
+                  type="date"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="fc-form-row">
+              <label for="location">촬영 지역 (Location) *</label>
               <input
-                id="ReferenceLink"
-                placeholder="YouTube / Pinterest / 이미지 링크 등 무드 레퍼런스"
+                id="location"
+                name="location"
+                type="text"
+                placeholder="예: 서울, 부산 등"
+                required
               />
             </div>
-          </div>
 
-          <div class="input-group">
-            <label>스타일 / 무드 설명 (Message)</label>
-            <textarea
-              id="Message"
-              placeholder="예: A24 느낌, 필름 톤, 인물 위주, 네온/야간, 자연광만, 다큐처럼 담담하게 등"
-            ></textarea>
-          </div>
+            <div class="fc-form-row">
+              <label for="referenceLink">레퍼런스 링크</label>
+              <input
+                id="referenceLink"
+                name="referenceLink"
+                type="url"
+                placeholder="드라이브/유튜브/핀터레스트 링크"
+              />
+            </div>
 
-          <button type="button" id="ai-submit">AI 스틸컷 예약 + 결과 보기</button>
-          <p class="footer-note">
-            제출 시 Notion DB에 기록되고, 바로 이어지는 결과 화면에서 AI 기반 추천 결과를 확인할 수 있습니다.
-          </p>
-        </form>
-      </section>
-    </main>
-  </div>
+            <!-- 이미지 업로드(메타만 저장) -->
+            <div class="fc-form-row">
+              <label for="imageFiles">이미지 파일 (최대 5개)</label>
+              <input
+                id="imageFiles"
+                name="imageFiles"
+                type="file"
+                accept="image/*"
+                multiple
+              />
+              <p class="fc-help">
+                파일은 메타 정보만 저장됩니다. 원본은 카톡/드라이브 링크로 전달 부탁!
+              </p>
+              <ul id="imagePreview" class="fc-file-preview"></ul>
+            </div>
 
-  <script>
-    // 서브 네비
-    document.querySelectorAll(".subnav-button").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const link = btn.dataset.link;
-        const scroll = btn.dataset.scroll;
+            <div class="fc-form-row">
+              <label for="message">요청 내용 *</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="4"
+                placeholder="어떤 느낌의 스틸컷을 원하시는지 자세히 적어주세요."
+                required
+              ></textarea>
+            </div>
 
-        document
-          .querySelectorAll(".subnav-button")
-          .forEach((b) => b.classList.remove("active"));
-        btn.classList.add("active");
+            <button type="submit" class="fc-button fc-button--primary" id="submitButton">
+              예약 제출
+            </button>
 
-        if (link) {
-          window.location.href = link;
-        } else if (scroll) {
-          const el = document.querySelector(scroll);
-          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      });
-    });
+            <p id="formStatus" class="fc-status-message"></p>
+          </form>
+        </section>
+      </main>
 
-    // 폼 전송
-    document.getElementById("ai-submit").addEventListener("click", async () => {
-      const body = {
-        Title: "AI Stillcut Request",
-        ProjectTitle: ProjectTitle.value,
-        Phone: Phone.value,
-        Email: Email.value,
-        VideoType: VideoType.value,
-        Runtime: Runtime.value,
-        Budget: Budget.value,
-        ShootDate: ShootDate.value,
-        Location: Location.value,
-        ReferenceLink: ReferenceLink.value,
-        Message: Message.value,
-      };
+      <footer class="fc-footer">
+        © Fiducia Collective
+      </footer>
+    </div>
 
-      if (!body.ProjectTitle || !body.Email) {
-        alert("프로젝트 제목과 이메일은 꼭 적어주세요.");
-        return;
-      }
-
-      try {
-        const res = await fetch("/.netlify/functions/ai-stillcut-request", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        });
-
-        const json = await res.json();
-        if (!json.ok) {
-          alert("서버 오류: " + (json.error || ""));
-          return;
-        }
-
-        // 결과 페이지에서 쓸 수 있도록 저장
-        localStorage.setItem("fiducia_ai_request", JSON.stringify(body));
-        window.location.href = "ai-stillcut-result.html";
-      } catch (e) {
-        console.error(e);
-        alert("연결에 문제가 있습니다. 잠시 후 다시 시도해 주세요.");
-      }
-    });
-  </script>
-</body>
+    <script src="js/stillcut.js"></script>
+  </body>
 </html>

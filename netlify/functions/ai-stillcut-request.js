@@ -8,10 +8,7 @@ exports.handler = async (event) => {
 
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
-    const STILL_DB =
-      process.env.NOTION_STILLCUT_DB ||
-      process.env.NOTION_DB_STILLCUT ||
-      process.env.STILLCUT_DB_ID;
+    const STILL_DB = process.env.NOTION_STILLCUT_DB;
 
     if (!NOTION_TOKEN || !STILL_DB) {
       return {
@@ -19,7 +16,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({
           ok: false,
           error:
-            "환경변수 NOTION_TOKEN(or NOTION_KEY) / NOTION_STILLCUT_DB 를 확인해 주세요.",
+            "환경변수 NOTION_TOKEN / NOTION_STILLCUT_DB 를 확인해 주세요.",
         }),
       };
     }

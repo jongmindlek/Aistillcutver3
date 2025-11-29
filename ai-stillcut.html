@@ -21,6 +21,16 @@
         <a href="equipment.html">GEAR</a>
         <a href="ai-stillcut.html" class="active">AI STILLCUT</a>
       </nav>
+
+      <!-- 스틸컷 서브 네비 -->
+      <div class="subnav">
+        <button class="subnav-button active" data-scroll="#stillcut-reserve">
+          바로 예약하기
+        </button>
+        <button class="subnav-button" data-link="ai-stillcut-result.html">
+          AI 스틸컷 확인하기
+        </button>
+      </div>
     </header>
 
     <section class="hero">
@@ -35,7 +45,7 @@
         </h1>
         <p class="hero-desc">
           이 폼은 <strong>AI 스틸컷 제작 + 감독/장비/샷팅 추천</strong>을 예약하는 창구입니다.<br />
-          제출 후, 다음 화면에서 추천 감독 / 추천 장비 / 추천 샷팅 / 예상 스틸컷 / 예상 가격을 확인할 수 있어요.
+          제출 후, 결과 화면에서 추천 감독 / 추천 장비 / 추천 샷팅 / 예상 스틸컷 / 예상 가격을 확인할 수 있어요.
         </p>
         <div class="hero-meta">
           <span>1) 프로젝트 정보 입력</span>
@@ -46,7 +56,7 @@
     </section>
 
     <main>
-      <section class="card">
+      <section class="card" id="stillcut-reserve">
         <div class="card-header">
           <div>
             <div class="card-title">AI 스틸컷 예약 폼</div>
@@ -133,6 +143,27 @@
   </div>
 
   <script>
+    // 서브 네비 동작
+    document.querySelectorAll(".subnav-button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const link = btn.dataset.link;
+        const scroll = btn.dataset.scroll;
+
+        document
+          .querySelectorAll(".subnav-button")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        if (link) {
+          window.location.href = link;
+        } else if (scroll) {
+          const el = document.querySelector(scroll);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 폼 전송
     document.getElementById("ai-submit").addEventListener("click", async () => {
       const body = {
         Title: "AI Stillcut Request",

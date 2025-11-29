@@ -7,7 +7,6 @@ exports.handler = async () => {
     const WORK_DB = process.env.NOTION_WORK_DB;
 
     if (!NOTION_KEY || !WORK_DB) {
-      console.error("ENV MISSING", { NOTION_KEY: !!NOTION_KEY, WORK_DB: !!WORK_DB });
       return {
         statusCode: 500,
         body: JSON.stringify({
@@ -19,20 +18,16 @@ exports.handler = async () => {
 
     const notion = new Client({ auth: NOTION_KEY });
 
-    // DB에서 페이지 불러오기 (최대 30개 정도)
+    // ⚠ 정렬, 필터 아무것도 안 건드리고 그냥 앞에서 30개만 가져오기
     const response = await notion.databases.query({
       database_id: WORK_DB,
       page_size: 30,
-      sorts: [
-        // Year 숫자 컬럼이 있다면 연도 내림차순
-        { property: "Year", direction: "descending" },
-      ],
     });
 
     const items = response.results.map((page) => {
       const props = page.properties || {};
 
-      // 1) 제목 : Title, Name 등 title 속성 우선 사용
+      // 1) 제목 (Title 또는 Name)
       let title = "Untitled";
       if (props.Title && props.Title.title?.length) {
         title = props.Title.title[0].plain_text;
@@ -40,11 +35,10 @@ exports.handler = async () => {
         title = props.Name.title[0].plain_text;
       }
 
-      // 2) 클라이언트 : Client (rich_text)
-      const client =
-        props.Client?.rich_text?.[0]?.plain_text || "";
+      // 2) 클라이언트 (Client)
+      const client = props.Client?.rich_text?.[0]?.plain_text || "";
 
-      // 3) 타입 : Type (select or rich_text)
+      // 3) 타입 (Type)
       let type = "";
       if (props.Type?.select?.name) {
         type = props.Type.select.name;
@@ -52,22 +46,14 @@ exports.handler = async () => {
         type = props.Type.rich_text[0].plain_text;
       }
 
-      // 4) 연도 : Year (number)
-      const year = typeof props.Year?.number === "number"
-        ? props.Year.number
-        : null;
+      // 4) 연도 (Year 숫자 없으면 null)
+      const year =
+        typeof props.Year?.number === "number" ? props.Year.number : null;
 
-      // 5) 링크 : URL 또는 Link (url 타입)
+      // 5) 링크 (URL 또는 Link)
       const url = props.URL?.url || props.Link?.url || null;
 
-      // 6) 썸네일 : Thumbnail (files)
-      let thumb = null;
-      if (props.Thumbnail?.files?.length) {
-        const file = props.Thumbnail.files[0];
-        thumb = file.external?.url || file.file?.url || null;
-      }
-
-      return { title, client, type, year, url, thumb };
+      return { title, client, type, year, url };
     });
 
     return {
@@ -78,7 +64,10 @@ exports.handler = async () => {
     console.error("works-list error:", err);
     return {
       statusCode: 500,
-      body: JSON.stringify({ ok: false, error: err.message }),
+      body: JSON.stringify({
+        ok: false,
+        error: err.message || "알 수 없는 오류",
+      }),
     };
   }
 };

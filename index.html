@@ -50,13 +50,13 @@
     </section>
 
     <main>
-      <!-- WORKS -->
+      <!-- RECENT WORK -->
       <section class="card">
         <div class="card-header">
           <div>
             <div class="card-title">RECENT WORK</div>
             <div class="card-sub">
-              Recent Work DB에서 공개(Published)로 체크된 작업들만 노출됩니다.
+              Notion Recent Work DB에서 공개(Published)로 체크된 작업들만 노출됩니다.
             </div>
           </div>
         </div>
@@ -66,9 +66,30 @@
         </div>
 
         <p class="footer-note">
-          Notion Recent Work DB에서 Title / SubTitle / Role / ThumbnailUrl / Sort / Published만 맞춰두면
+          Notion Recent Work DB에서 Title / SubTitle / RoleLabel / RoleName / ThumbnailUrl / Sort / Published만 맞춰두면
           이 섹션이 자동으로 갱신됩니다.
         </p>
+      </section>
+
+      <!-- QUICK ACTIONS -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">바로 시작하기</div>
+            <div class="card-sub">
+              장비 예약이 먼저인지, AI 스틸컷이 먼저인지 헷갈리면 여기서 선택해도 괜찮아요.
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-row">
+          <a href="equipment.html">
+            <button type="button">장비 예약 페이지 열기</button>
+          </a>
+          <a href="ai-stillcut.html">
+            <button type="button">AI 스틸컷 바로 예약하기</button>
+          </a>
+        </div>
       </section>
 
       <!-- CONTACT -->
@@ -112,7 +133,7 @@
         }
 
         const grid = document.createElement("div");
-        grid.className = "works-grid"; // 스타일은 style.css에서 정의해도 되고, 기존 form-meta-grid 써도 됨
+        grid.className = "works-grid";
 
         items.forEach((item) => {
           const card = document.createElement("div");

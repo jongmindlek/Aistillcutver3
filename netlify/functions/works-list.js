@@ -5,10 +5,10 @@ exports.handler = async () => {
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
 
-    // ✅ 너가 쓰는 이름 + 내가 쓴 이름 둘 다 지원
+    // 너 환경변수 이름들 다 대응
     const WORK_DB =
       process.env.NOTION_WORK_DB ||
-      process.env.NOTION_WORKS_DB_ID; // ← 캡처에서 보인 이름
+      process.env.NOTION_WORKS_DB_ID;
 
     if (!NOTION_TOKEN || !WORK_DB) {
       return {
@@ -42,12 +42,43 @@ exports.handler = async () => {
     const items = response.results.map((page) => {
       const p = page.properties || {};
 
+      // 제목/텍스트
+      const title = p.Title?.title?.[0]?.plain_text || "";
+      const subtitle = p.SubTitle?.rich_text?.[0]?.plain_text || "";
+      const roleLabel = p.RoleLabel?.rich_text?.[0]?.plain_text || "";
+      const roleName = p.RoleName?.rich_text?.[0]?.plain_text || "";
+
+      // 🔥 ThumbnailUrl 처리 (URL 타입 + 파일 & 미디어 타입 모두 지원)
+      let thumbnailUrl = "";
+
+      const thumbProp = p.ThumbnailUrl;
+
+      if (thumbProp) {
+        // 1) URL 타입 (property type: url)
+        if (thumbProp.url) {
+          thumbnailUrl = thumbProp.url;
+        }
+
+        // 2) 파일 & 미디어 타입 (property type: files)
+        if (!thumbnailUrl && Array.isArray(thumbProp.files) && thumbProp.files.length) {
+          const file = thumbProp.files[0];
+          // 외부 링크
+          if (file.external?.url) {
+            thumbnailUrl = file.external.url;
+          }
+          // Notion에 업로드된 파일
+          else if (file.file?.url) {
+            thumbnailUrl = file.file.url;
+          }
+        }
+      }
+
       return {
-        title: p.Title?.title?.[0]?.plain_text || "",
-        subtitle: p.SubTitle?.rich_text?.[0]?.plain_text || "",
-        roleLabel: p.RoleLabel?.rich_text?.[0]?.plain_text || "",
-        roleName: p.RoleName?.rich_text?.[0]?.plain_text || "",
-        thumbnailUrl: p.ThumbnailUrl?.url || "",
+        title,
+        subtitle,
+        roleLabel,
+        roleName,
+        thumbnailUrl,
       };
     });
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gear Reservation – fiducia collective</title>
+  <title>Gear Rental – fiducia collective</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="logo-mark"><span></span></div>
         <div class="logo-text">
           <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
-          <div class="logo-text-sub">Gear · Schedule · Responsibility</div>
+          <div class="logo-text-sub">Gear Rental · DayPay style</div>
         </div>
       </div>
       <nav>
@@ -27,18 +27,19 @@
       <div class="hero-inner">
         <div class="hero-pill">
           <span class="hero-pill-dot"></span>
-          FX3 · 짐벌 · 조명 · Car 옵션
+          FX3 · 짐벌 · 조명 · 패키지 렌탈
         </div>
         <h1 class="hero-title">
-          “장비는 fiducia에서 온다.”<br />
-          라고 말할 수 있게 만드는 예약 폼.
+          데이페이처럼,  
+          장비를 고르고 날짜를 찍으면 끝.
         </h1>
         <p class="hero-desc">
-          현장에서 이미 검증된 셋업들만 정리해 둔 Gear Reservation입니다.  
-          어떤 프로젝트인지, 언제 찍는지만 명확하면 나머지는 fiducia가 챙깁니다.
+          아래에서 장비 패키지를 고르고,  
+          달력에서 원하는 기간을 선택한 뒤 “장바구니에 담기”를 누르면  
+          자동으로 기간이 계산되고, 예약 내역서가 fiducia로 전달됩니다.
         </p>
         <div class="hero-meta">
-          <span>SONY FX3 기반 1인/2인 촬영 세트</span>
+          <span>FX3 기반 1인/2인 촬영 패키지</span>
           <span>Gear Reservation Notion DB 연동</span>
         </div>
       </div>
@@ -48,39 +49,94 @@
       <section class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">장비 예약 폼</div>
+            <div class="card-title">장비 선택</div>
             <div class="card-sub">
-              프로젝트 이름과 촬영 날짜만 정확히 적어주면, 나머지는 여기서 정리됩니다.
+              먼저 패키지를 고르고, 아래 달력에서 기간을 선택한 뒤 장바구니에 담아주세요.
             </div>
           </div>
         </div>
 
-        <div class="form-meta-grid" style="margin-bottom: 14px;">
-          <div class="form-meta-item">
-            <span class="label">예시 패키지</span>
-            <span class="value">FX3 + 24–105 + 짐벌 + 1-Light + 무선 마이크</span>
+        <!-- 장비 리스트 -->
+        <div id="gear-list" class="form-meta-grid" style="margin-bottom: 16px;">
+          <div class="form-meta-item gear-item" data-gear-name="FX3 BASIC KIT">
+            <span class="label">FX3 BASIC KIT</span>
+            <span class="value">
+              FX3 + 표준 줌렌즈 + 배터리 세트 · 간단한 1인 촬영용
+            </span>
           </div>
-          <div class="form-meta-item">
-            <span class="label">운영 방식</span>
-            <span class="value">1인 촬영 / 2~3인 팀 촬영 모두 대응</span>
+          <div class="form-meta-item gear-item" data-gear-name="FX3 GIMBAL KIT">
+            <span class="label">FX3 GIMBAL KIT</span>
+            <span class="value">
+              FX3 + 짐벌 + 광각/표준 렌즈 · 무빙이 많은 촬영용
+            </span>
+          </div>
+          <div class="form-meta-item gear-item" data-gear-name="LIGHT & AUDIO KIT">
+            <span class="label">LIGHT & AUDIO KIT</span>
+            <span class="value">
+              LED 조명 2~3개 + 스탠드 + 무선 마이크 · 카메라 별도
+            </span>
+          </div>
+          <div class="form-meta-item gear-item" data-gear-name="CUSTOM">
+            <span class="label">CUSTOM</span>
+            <span class="value">
+              위 구성에 없거나, 추가 요청이 필요한 경우. 장바구니 메모에 자세히 적어 주세요.
+            </span>
           </div>
         </div>
 
-        <form id="equip-form">
-          <div class="input-group">
-            <label>프로젝트명 (ProjectName)</label>
-            <input
-              id="ProjectName"
-              placeholder="예: 브랜드 필름 / 웨딩 / 패션 룩북 / MV"
-            />
-          </div>
+        <!-- 선택된 장비 표시 -->
+        <p class="card-sub" id="selected-gear-text">
+          선택된 장비: 아직 선택되지 않았습니다.
+        </p>
+      </section>
 
+      <!-- 달력 + 장바구니 -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">대여 기간 선택</div>
+            <div class="card-sub">
+              캘린더에서 시작일과 종료일을 순서대로 눌러 주세요. (동일 날짜 클릭 시 1일 대여)
+            </div>
+          </div>
+        </div>
+
+        <!-- 달력 -->
+        <div id="calendar" style="margin-bottom: 14px;"></div>
+
+        <!-- 장바구니 -->
+        <div class="card-header" style="margin-top: 12px;">
+          <div>
+            <div class="card-title">장바구니</div>
+            <div class="card-sub">담긴 패키지와 기간이 여기에 정리됩니다.</div>
+          </div>
+          <button type="button" class="btn-secondary" id="add-to-cart">
+            선택한 장비 + 기간 담기
+          </button>
+        </div>
+
+        <div id="cart-list">
+          <p class="card-sub">아직 장바구니에 담긴 장비가 없습니다.</p>
+        </div>
+      </section>
+
+      <!-- 신청자 정보 + 최종 전송 -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">예약자 정보</div>
+            <div class="card-sub">
+              장비 예약 확정을 위해, 연락 가능한 정보를 남겨 주세요.
+            </div>
+          </div>
+        </div>
+
+        <form id="reserve-form">
           <div class="form-two-cols">
             <div class="input-group">
-              <label>대여자 이름 (RenterName)</label>
+              <label>예약자 이름 (RenterName)</label>
               <input id="RenterName" placeholder="예: 홍길동" />
             </div>
-
             <div class="input-group">
               <label>연락처 (Contact)</label>
               <input id="Contact" placeholder="010-0000-0000" />
@@ -88,39 +144,25 @@
           </div>
 
           <div class="input-group">
-            <label>장비 구성 (Gear)</label>
+            <label>프로젝트명 (ProjectName)</label>
             <input
-              id="Gear"
-              placeholder="예: FX3 + 짐벌 + 조명 2개 + 무선 마이크"
+              id="ProjectName"
+              placeholder="예: 브랜드 필름 / 웨딩 / 룩북 / MV"
             />
           </div>
 
-          <div class="form-two-cols">
-            <div class="input-group">
-              <label>촬영 날짜 (Date)</label>
-              <input id="Date" type="date" />
-            </div>
-            <div class="input-group">
-              <label>상태(Status)는 노션에서 직접 관리</label>
-              <input
-                disabled
-                value="Status / AutoCreated는 시스템에서 자동 관리"
-              />
-            </div>
-          </div>
-
           <div class="input-group">
-            <label>메모 (Memo)</label>
+            <label>추가 메모 (Memo)</label>
             <textarea
               id="Memo"
-              placeholder="픽업/반납 시간, 차량, 촬영 장소, 특이사항 등을 적어주세요."
+              placeholder="픽업/반납 시간, 차량, 촬영 장소, 특이사항 등을 자유롭게 적어 주세요."
             ></textarea>
           </div>
 
-          <button type="button" id="equip-submit">장비 예약하기</button>
+          <button type="button" id="submit-reservation">장비 예약 요청 보내기</button>
           <p class="footer-note">
-            제출 시 Notion의 Gear Reservation DB에 바로 기록됩니다.  
-            스케줄이 겹치거나 조정이 필요한 경우, 별도로 연락을 드립니다.
+            “장비명 / 기간 / 일수 / 메모”가 정리된 형태로 Notion Gear Reservation DB에 저장됩니다.  
+            예약 확정 및 금액, 보증 관련 안내는 개별 연락으로 이어집니다.
           </p>
         </form>
       </section>
@@ -128,23 +170,258 @@
   </div>
 
   <script>
-    document
-      .getElementById("equip-submit")
-      .addEventListener("click", async () => {
-        const body = {
-          Title: "Gear Reservation",
-          ProjectName: ProjectName.value,
-          RenterName: RenterName.value,
-          Contact: Contact.value,
-          Gear: Gear.value,
-          Date: Date.value,
-          Memo: Memo.value,
-        };
+    // ======= 장비 선택 =======
+    let selectedGearName = null;
+    const gearItems = document.querySelectorAll(".gear-item");
+    const selectedGearText = document.getElementById("selected-gear-text");
 
-        if (!body.ProjectName || !body.RenterName || !body.Contact) {
-          alert("프로젝트명 / 대여자 / 연락처는 꼭 입력해 주세요.");
+    gearItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        gearItems.forEach((i) => (i.style.outline = "none"));
+        item.style.outline = "1px solid rgba(255,255,255,0.5)";
+        selectedGearName = item.dataset.gearName;
+        selectedGearText.textContent = "선택된 장비: " + selectedGearName;
+      });
+    });
+
+    // ======= 달력 생성 (간단 월 캘린더) =======
+    const calendarEl = document.getElementById("calendar");
+    let startDate = null;
+    let endDate = null;
+
+    function formatDateKey(date) {
+      return date.toISOString().split("T")[0];
+    }
+
+    function buildCalendar(baseDate = new Date()) {
+      calendarEl.innerHTML = "";
+
+      const year = baseDate.getFullYear();
+      const month = baseDate.getMonth(); // 0~11
+
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const startWeekday = firstDay.getDay(); // 0=일
+      const totalDays = lastDay.getDate();
+
+      const header = document.createElement("div");
+      header.style.display = "flex";
+      header.style.justifyContent = "space-between";
+      header.style.alignItems = "center";
+      header.style.marginBottom = "8px";
+
+      const title = document.createElement("span");
+      title.textContent = `${year}년 ${month + 1}월`;
+
+      const todayBtn = document.createElement("button");
+      todayBtn.type = "button";
+      todayBtn.className = "btn-secondary";
+      todayBtn.style.fontSize = "11px";
+      todayBtn.textContent = "오늘로 이동";
+      todayBtn.addEventListener("click", () => {
+        startDate = null;
+        endDate = null;
+        buildCalendar(new Date());
+      });
+
+      header.appendChild(title);
+      header.appendChild(todayBtn);
+      calendarEl.appendChild(header);
+
+      const grid = document.createElement("div");
+      grid.style.display = "grid";
+      grid.style.gridTemplateColumns = "repeat(7, minmax(0,1fr))";
+      grid.style.gap = "4px";
+      grid.style.fontSize = "11px";
+
+      const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
+      weekdays.forEach((d) => {
+        const w = document.createElement("div");
+        w.textContent = d;
+        w.style.opacity = "0.7";
+        grid.appendChild(w);
+      });
+
+      // 빈칸
+      for (let i = 0; i < startWeekday; i++) {
+        const empty = document.createElement("div");
+        empty.textContent = "";
+        grid.appendChild(empty);
+      }
+
+      // 날짜
+      for (let day = 1; day <= totalDays; day++) {
+        const cellDate = new Date(year, month, day);
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = String(day);
+        btn.style.padding = "6px 4px";
+        btn.style.fontSize = "12px";
+
+        btn.addEventListener("click", () => {
+          // 날짜 선택 로직: 첫 클릭 = 시작, 두번째 클릭 = 종료
+          if (!startDate || (startDate && endDate)) {
+            startDate = cellDate;
+            endDate = null;
+          } else {
+            if (cellDate < startDate) {
+              endDate = startDate;
+              startDate = cellDate;
+            } else {
+              endDate = cellDate;
+            }
+          }
+          highlightRange(grid, year, month, totalDays);
+        });
+
+        grid.appendChild(btn);
+      }
+
+      calendarEl.appendChild(grid);
+    }
+
+    function highlightRange(grid, year, month, totalDays) {
+      const buttons = Array.from(grid.querySelectorAll("button"));
+      buttons.forEach((b) => {
+        b.style.border = "1px solid var(--line-soft)";
+        b.style.background = "rgba(8,8,16,0.95)";
+      });
+
+      if (!startDate) return;
+
+      const startKey = formatDateKey(startDate);
+      const endKey = endDate ? formatDateKey(endDate) : startKey;
+
+      const startDay = parseInt(startKey.slice(-2), 10);
+      const endDay = parseInt(endKey.slice(-2), 10);
+
+      buttons.forEach((b) => {
+        const day = parseInt(b.textContent, 10);
+        if (Number.isNaN(day)) return;
+
+        if (day === startDay && day === endDay) {
+          b.style.background = "linear-gradient(135deg,#4b8dff,#ff4b8c)";
+        } else if (day === startDay || day === endDay) {
+          b.style.background = "rgba(75,141,255,0.6)";
+        } else if (day > startDay && day < endDay) {
+          b.style.background = "rgba(75,141,255,0.25)";
+        }
+      });
+    }
+
+    buildCalendar();
+
+    // ======= 장바구니 로직 =======
+    const cartListEl = document.getElementById("cart-list");
+    const addToCartBtn = document.getElementById("add-to-cart");
+    const cart = [];
+
+    function renderCart() {
+      if (!cart.length) {
+        cartListEl.innerHTML =
+          '<p class="card-sub">아직 장바구니에 담긴 장비가 없습니다.</p>';
+        return;
+      }
+
+      const list = document.createElement("div");
+      list.className = "form-meta-grid";
+
+      cart.forEach((item, idx) => {
+        const div = document.createElement("div");
+        div.className = "form-meta-item";
+
+        const label = document.createElement("span");
+        label.className = "label";
+        label.textContent = `${item.gear}`;
+
+        const value = document.createElement("span");
+        value.className = "value";
+        value.textContent = `${item.start} ~ ${item.end} · 총 ${item.days}일`;
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "btn-secondary";
+        removeBtn.style.fontSize = "10px";
+        removeBtn.style.marginTop = "6px";
+        removeBtn.textContent = "삭제";
+        removeBtn.addEventListener("click", () => {
+          cart.splice(idx, 1);
+          renderCart();
+        });
+
+        div.appendChild(label);
+        div.appendChild(value);
+        div.appendChild(removeBtn);
+        list.appendChild(div);
+      });
+
+      cartListEl.innerHTML = "";
+      cartListEl.appendChild(list);
+    }
+
+    addToCartBtn.addEventListener("click", () => {
+      if (!selectedGearName) {
+        alert("먼저 장비 패키지를 선택해 주세요.");
+        return;
+      }
+      if (!startDate) {
+        alert("달력에서 시작일과 종료일을 선택해 주세요.");
+        return;
+      }
+
+      const startKey = formatDateKey(startDate);
+      const endKey = endDate ? formatDateKey(endDate) : startKey;
+
+      const start = new Date(startKey);
+      const end = new Date(endKey);
+      const diffMs = end - start;
+      const days = Math.floor(diffMs / (1000 * 60 * 60 * 24)) + 1;
+
+      cart.push({
+        gear: selectedGearName,
+        start: startKey,
+        end: endKey,
+        days,
+      });
+      renderCart();
+    });
+
+    // ======= 최종 예약 전송 =======
+    document
+      .getElementById("submit-reservation")
+      .addEventListener("click", async () => {
+        const renterName = document.getElementById("RenterName").value;
+        const contact = document.getElementById("Contact").value;
+        const projectName = document.getElementById("ProjectName").value;
+        const memo = document.getElementById("Memo").value;
+
+        if (!renterName || !contact || !projectName) {
+          alert("이름 / 연락처 / 프로젝트명은 꼭 입력해 주세요.");
           return;
         }
+
+        if (!cart.length) {
+          alert("장바구니에 최소 1개 이상의 장비를 담아 주세요.");
+          return;
+        }
+
+        // Notion에 저장할 문자열로 장바구니 정리
+        const cartSummary = cart
+          .map(
+            (item) =>
+              `${item.gear} · ${item.start} ~ ${item.end} · ${item.days}일`
+          )
+          .join("\n");
+
+        const body = {
+          Title: "Gear Reservation",
+          ProjectName: projectName,
+          RenterName: renterName,
+          Contact: contact,
+          Gear: cartSummary, // ✅ 장비 + 기간 전체를 Gear 필드에 기록
+          Date: cart[0].start, // 대표 날짜 (첫 장비 시작일)
+          Memo: memo,
+        };
 
         try {
           const res = await fetch("/.netlify/functions/equipment-reserve", {
@@ -155,8 +432,10 @@
 
           const json = await res.json();
           if (json.ok) {
-            alert("장비 예약이 접수되었습니다. 노션에서 바로 확인할 수 있어요.");
-            document.getElementById("equip-form").reset();
+            alert("장비 예약 요청이 접수되었습니다!");
+            document.getElementById("reserve-form").reset();
+            cart.length = 0;
+            renderCart();
           } else {
             alert("서버에서 오류가 났습니다. 잠시 후 다시 시도해 주세요.");
           }

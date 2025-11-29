@@ -1,4 +1,3 @@
-// netlify/functions/gear-reservations.js
 const { Client } = require("@notionhq/client");
 
 exports.handler = async (event) => {
@@ -9,18 +8,17 @@ exports.handler = async (event) => {
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
 
-    const GEAR_DB =
-      process.env.NOTION_GEAR_DB ||
-      process.env.NOTION_GEAR_DB_ID ||
+    const RESERVE_DB =
+      process.env.NOTION_GEAR_RESERVATION_DB ||
       process.env.NOTION_GEAR_RESERVATION_DB_ID;
 
-    if (!NOTION_TOKEN || !GEAR_DB) {
+    if (!NOTION_TOKEN || !RESERVE_DB) {
       return {
         statusCode: 500,
         body: JSON.stringify({
           ok: false,
           error:
-            "NOTION_TOKEN 또는 NOTION_GEAR_DB / NOTION_GEAR_DB_ID / NOTION_GEAR_RESERVATION_DB_ID 환경변수를 확인해 주세요.",
+            "NOTION_TOKEN 또는 NOTION_GEAR_RESERVATION_DB / NOTION_GEAR_RESERVATION_DB_ID 환경변수를 확인해 주세요.",
         }),
       };
     }
@@ -40,7 +38,7 @@ exports.handler = async (event) => {
       : undefined;
 
     const response = await notion.databases.query({
-      database_id: GEAR_DB,
+      database_id: RESERVE_DB,
       page_size: 100,
       filter,
     });

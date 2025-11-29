@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Stillcut 결과 – fiducia collective</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="logo-wrap">
+        <div class="logo-mark"><span></span></div>
+        <div class="logo-text">
+          <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
+          <div class="logo-text-sub">AI STILLCUT · 결과 화면</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">HOME</a>
+        <a href="equipment.html">GEAR</a>
+        <a href="ai-stillcut.html" class="active">AI STILLCUT</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          AI 분석 기반 추천 결과
+        </div>
+        <h1 class="hero-title">
+          이 프로젝트를 위해<br />
+          우리가 제안하는 한 장면과 셋업.
+        </h1>
+        <p class="hero-desc" id="project-summary">
+          방금 입력한 프로젝트 정보를 불러오는 중입니다…
+        </p>
+        <div class="hero-meta">
+          <span>추천 감독</span>
+          <span>추천 장비 & 샷팅</span>
+          <span>예상 스틸컷 & 견적</span>
+        </div>
+      </div>
+    </section>
+
+    <main id="result-main" style="display:none;">
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">추천 감독</div>
+            <div class="card-sub">
+              프로젝트 성격과 예산, 무드를 기반으로 선택된 스타일입니다.
+            </div>
+          </div>
+        </div>
+        <p class="card-sub" id="director-rec"></p>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">추천 장비 세팅</div>
+            <div class="card-sub">
+              러닝타임 / 규모 / 무드를 기준으로 한 기본 셋업입니다.
+            </div>
+          </div>
+        </div>
+        <p class="card-sub" id="gear-rec"></p>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">추천 샷팅 / 씬 구성</div>
+            <div class="card-sub">
+              첫 촬영일에 맞춰 준비하면 좋은 핵심 샷들입니다.
+            </div>
+          </div>
+        </div>
+        <p class="card-sub" id="shot-rec"></p>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">예상 스틸컷</div>
+            <div class="card-sub">
+              텍스트로 톤과 구도를 설명합니다. 실제 이미지는 나중에 파이프라인 붙이면 됨.
+            </div>
+          </div>
+        </div>
+        <div
+          style="
+            border-radius: 18px;
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 14px;
+            background: radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 60%);
+            min-height: 80px;
+          "
+        >
+          <p class="card-sub" id="stillcut-desc"></p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">예상 가격 (세부 내역)</div>
+            <div class="card-sub">
+              입력한 러닝타임 / 예산 / 촬영일 기준으로 rough 견적을 계산한 값입니다.
+            </div>
+          </div>
+        </div>
+        <p class="card-sub" id="price-summary"></p>
+        <p class="footer-note">
+          실제 견적은 촬영 일수, 컷수, 후반 작업 범위에 따라 달라질 수 있습니다.  
+          이 내용은 참고용 가이드이며, 최종 금액은 fiducia와의 개별 협의로 확정됩니다.
+        </p>
+      </section>
+    </main>
+
+    <main id="no-data-main" style="display:none;">
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">불러올 프로젝트가 없어요</div>
+            <div class="card-sub">
+              AI 스틸컷 예약 폼에서 정보를 먼저 제출해야 합니다.
+            </div>
+          </div>
+        </div>
+        <p class="card-sub">
+          <a href="ai-stillcut.html">AI 스틸컷 예약 폼으로 돌아가기</a>
+        </p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    function parseRequest() {
+      try {
+        const raw = localStorage.getItem("fiducia_ai_request");
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
+    }
+
+    function estimatePrice(budgetStr, runtimeStr) {
+      let base = 1500000;
+      const minMatch = runtimeStr.match(/(\d+)\s*분/);
+      if (minMatch) {
+        const mins = Number(minMatch[1]);
+        if (mins <= 1) base = 1200000;
+        else if (mins <= 3) base = 1800000;
+        else base = 2500000;
+      }
+
+      const numMatch = budgetStr.match(/(\d+)\s*~\s*(\d+)/);
+      if (numMatch) {
+        const low = Number(numMatch[1]) * 10000;
+        const high = Number(numMatch[2]) * 10000;
+        base = Math.min(Math.max(base, low), high);
+      }
+
+      const shootDays = 1 + (base > 2000000 ? 1 : 0);
+
+      return {
+        total: base,
+        shootDays,
+        directorFee: Math.floor(base * 0.35),
+        dopFee: Math.floor(base * 0.25),
+        gearFee: Math.floor(base * 0.2),
+        postFee: Math.floor(base * 0.2),
+      };
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const req = parseRequest();
+
+      const projectSummaryEl = document.getElementById("project-summary");
+      const resultMain = document.getElementById("result-main");
+      const noDataMain = document.getElementById("no-data-main");
+
+      if (!req) {
+        projectSummaryEl.textContent =
+          "이전 페이지에서 프로젝트 정보를 찾지 못했습니다.";
+        resultMain.style.display = "none";
+        noDataMain.style.display = "block";
+        return;
+      }
+
+      const {
+        ProjectTitle,
+        VideoType,
+        Runtime,
+        Budget,
+        Location,
+        Message,
+      } = req;
+
+      projectSummaryEl.textContent =
+        `프로젝트: ${ProjectTitle || "-"} · 타입: ${VideoType || "-"} · 러닝타임: ${Runtime ||
+          "-"} · 예산: ${Budget || "미정"} · 지역: ${Location || "-"}`;
+
+      const directorEl = document.getElementById("director-rec");
+      let directorText = "";
+      if (/웨딩|wedding/i.test(VideoType || "")) {
+        directorText =
+          "감정선과 순간 포착에 강한 웨딩/라이프 스타일 디렉터를 추천합니다. " +
+          "소규모 팀으로 움직이며 동선이 많은 하루 촬영에 익숙한 타입입니다.";
+      } else if (/패션|fashion/i.test(VideoType || "")) {
+        directorText =
+          "옷의 질감과 모델의 리듬을 중요하게 보는 패션/룩북 디렉터가 어울립니다. " +
+          "조명 구조를 미니멀하게 가져가면서도 프레임 안의 그래픽을 잘 뽑는 타입입니다.";
+      } else if (/MV|뮤직|music/i.test(VideoType || "")) {
+        directorText =
+          "뮤직비디오 경험이 있는 인디 디렉터를 추천합니다. " +
+          "타이트한 일정 안에서 콘셉트를 유지하면서도 유연하게 변형할 수 있는 사람입니다.";
+      } else {
+        directorText =
+          "브랜드 톤과 내러티브를 함께 설계할 수 있는 브랜딩 필름 중심 디렉터를 추천합니다. " +
+          "클라이언트 커뮤니케이션에 익숙하고, 후반까지 톤을 책임지는 타입입니다.";
+      }
+      directorEl.textContent = directorText;
+
+      const gearEl = document.getElementById("gear-rec");
+      gearEl.textContent =
+        "카메라는 SONY FX3 또는 동급 시네마 라인 바디, " +
+        "기본 줌 + 상황에 따라 광각/망원 조합을 추천합니다. " +
+        "씬 규모가 크지 않다면 2-Light 구성(키라이트 + 링/엣지)과 " +
+        "간단한 무선 오디오 세트로 충분합니다. " +
+        "무빙이 많은 경우 짐벌 1대, 그렇지 않다면 삼각대 + 모노포드 조합이 효율적입니다.";
+
+      const shotEl = document.getElementById("shot-rec");
+      shotEl.textContent =
+        "1) 오프닝 시퀀스 – 브랜드/인물의 분위기를 한 번에 보여주는 와이드 샷, " +
+        "2) 핵심 액션 클로즈업 – 손/시선/제품 등, " +
+        "3) 공간을 설명하는 미디엄 와이드, " +
+        "4) 마무리용 실루엣 혹은 디테일 샷을 기본 구조로 제안합니다. " +
+        "전체 러닝타임에 따라 이 중 일부를 반복/변주하는 구성이 좋습니다.";
+
+      const stillEl = document.getElementById("stillcut-desc");
+      stillEl.textContent =
+        "주인공을 중앙에서 한 발 비켜 세운 미디엄 샷, " +
+        "배경에는 브랜드 톤에 맞는 색감을 가진 조명이 은은하게 깔려 있습니다. " +
+        "피사체의 눈에는 소프트한 반사가 들어오고, 주변은 살짝 어둡게 떨어져 " +
+        "시선이 자연스럽게 인물과 제품으로 모이게 됩니다. " +
+        "전체적으로는 필름 그레인이 얇게 깔린 느낌의 스틸컷을 기준으로 생각했습니다.";
+
+      const priceEl = document.getElementById("price-summary");
+      const priceInfo = estimatePrice(Budget || "", Runtime || "");
+      priceEl.innerHTML =
+        "예상 총 금액: " +
+        priceInfo.total.toLocaleString() +
+        "원<br>" +
+        "· 촬영일: 약 " +
+        priceInfo.shootDays +
+        "일<br>" +
+        "· 감독 디렉팅: " +
+        priceInfo.directorFee.toLocaleString() +
+        "원<br>" +
+        "· 촬영(DOP) & 오퍼레이터: " +
+        priceInfo.dopFee.toLocaleString() +
+        "원<br>" +
+        "· 장비/렌탈: " +
+        priceInfo.gearFee.toLocaleString() +
+        "원<br>" +
+        "· 편집/컬러/사운드 등 후반: " +
+        priceInfo.postFee.toLocaleString() +
+        "원";
+
+      resultMain.style.display = "block";
+      noDataMain.style.display = "none";
+    });
+  </script>
+</body>
+</html>

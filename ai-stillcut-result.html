@@ -13,7 +13,7 @@
         <div class="logo-mark"><span></span></div>
         <div class="logo-text">
           <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
-          <div class="logo-text-sub">AI STILLCUT · 결과 화면</div>
+          <div class="logo-text-sub">AI STILLCUT · 결과</div>
         </div>
       </div>
       <nav>
@@ -27,255 +27,212 @@
       <div class="hero-inner">
         <div class="hero-pill">
           <span class="hero-pill-dot"></span>
-          AI 분석 기반 추천 결과
+          AI 스틸컷 가상 제안
         </div>
         <h1 class="hero-title">
-          이 프로젝트를 위해<br />
-          우리가 제안하는 한 장면과 셋업.
+          우리가 상상해 본<br />
+          당신 프로젝트의 한 장면.
         </h1>
-        <p class="hero-desc" id="project-summary">
-          방금 입력한 프로젝트 정보를 불러오는 중입니다…
+        <p class="hero-desc">
+          입력해 주신 정보와 무드를 기반으로,<br />
+          추천 감독 / 추천 장비 / 샷팅 스타일 / 예상 스틸컷 / 예상 견적을 정리했습니다.<br />
+          실제 협의 과정에서 이 결과를 참고해 방향을 조정하게 됩니다.
         </p>
-        <div class="hero-meta">
-          <span>추천 감독</span>
-          <span>추천 장비 & 샷팅</span>
-          <span>예상 스틸컷 & 견적</span>
-        </div>
       </div>
     </section>
 
-    <main id="result-main" style="display:none;">
+    <main>
+      <!-- 입력 정보 요약 -->
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">프로젝트 요약</div>
+            <div class="card-sub">
+              AI 스틸컷 예약 시 입력된 기본 정보입니다.
+            </div>
+          </div>
+        </div>
+        <div id="project-summary" class="card-sub">
+          불러오는 중입니다…
+        </div>
+      </section>
+
+      <!-- 추천 감독 -->
       <section class="card">
         <div class="card-header">
           <div>
             <div class="card-title">추천 감독</div>
             <div class="card-sub">
-              프로젝트 성격과 예산, 무드를 기반으로 선택된 스타일입니다.
+              프로젝트의 무드와 샷 구성을 기반으로,<br />
+              가장 적합한 연출 감각을 가진 감독 유형입니다.
             </div>
           </div>
         </div>
-        <p class="card-sub" id="director-rec"></p>
+        <p id="director-recommend" class="card-sub"></p>
       </section>
 
+      <!-- 추천 장비 -->
       <section class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">추천 장비 세팅</div>
+            <div class="card-title">추천 장비 세트</div>
             <div class="card-sub">
-              러닝타임 / 규모 / 무드를 기준으로 한 기본 셋업입니다.
+              예상 샷 스타일과 장소에 따라,  
+              합리적인 장비 구성만 뽑았습니다.
             </div>
           </div>
         </div>
-        <p class="card-sub" id="gear-rec"></p>
+        <ul id="gear-recommend" class="card-sub"></ul>
       </section>
 
+      <!-- 샷팅 스타일 -->
       <section class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">추천 샷팅 / 씬 구성</div>
+            <div class="card-title">샷팅 스타일 제안</div>
             <div class="card-sub">
-              첫 촬영일에 맞춰 준비하면 좋은 핵심 샷들입니다.
+              씬이 전달하려는 메시지를 가장 잘 보여줄 샷 구성과 무빙 스타일입니다.
             </div>
           </div>
         </div>
-        <p class="card-sub" id="shot-rec"></p>
+        <p id="shot-recommend" class="card-sub"></p>
       </section>
 
+      <!-- 예상 스틸컷 / 견적 -->
       <section class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">예상 스틸컷</div>
+            <div class="card-title">예상 스틸컷 & 예상 견적</div>
             <div class="card-sub">
-              텍스트로 톤과 구도를 설명합니다. 실제 이미지는 나중에 파이프라인 붙이면 됨.
+              실제 계약 전, 대략적인 톤과 볼륨을 가늠할 수 있는 수준의 가이드입니다.
             </div>
           </div>
         </div>
-        <div
-          style="
-            border-radius: 18px;
-            border: 1px solid rgba(255,255,255,0.12);
-            padding: 14px;
-            background: radial-gradient(circle at top left, rgba(255,255,255,0.08), transparent 60%);
-            min-height: 80px;
-          "
-        >
-          <p class="card-sub" id="stillcut-desc"></p>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">예상 가격 (세부 내역)</div>
-            <div class="card-sub">
-              입력한 러닝타임 / 예산 / 촬영일 기준으로 rough 견적을 계산한 값입니다.
-            </div>
-          </div>
-        </div>
-        <p class="card-sub" id="price-summary"></p>
+        <p id="stillcut-recommend" class="card-sub"></p>
+        <p id="budget-recommend" class="card-sub" style="margin-top:10px;"></p>
         <p class="footer-note">
-          실제 견적은 촬영 일수, 컷수, 후반 작업 범위에 따라 달라질 수 있습니다.  
-          이 내용은 참고용 가이드이며, 최종 금액은 fiducia와의 개별 협의로 확정됩니다.
-        </p>
-      </section>
-    </main>
-
-    <main id="no-data-main" style="display:none;">
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">불러올 프로젝트가 없어요</div>
-            <div class="card-sub">
-              AI 스틸컷 예약 폼에서 정보를 먼저 제출해야 합니다.
-            </div>
-          </div>
-        </div>
-        <p class="card-sub">
-          <a href="ai-stillcut.html">AI 스틸컷 예약 폼으로 돌아가기</a>
+          이 내용은 자동 생성된 1차 제안입니다.<br />
+          실제 촬영 플랜 및 견적은 fiducia collective와의 상담을 통해 확정됩니다.
         </p>
       </section>
     </main>
   </div>
 
   <script>
-    function parseRequest() {
+    function loadRequest() {
+      const raw = localStorage.getItem("fiducia_ai_request");
+      if (!raw) return null;
       try {
-        const raw = localStorage.getItem("fiducia_ai_request");
-        if (!raw) return null;
         return JSON.parse(raw);
-      } catch (e) {
-        console.error(e);
+      } catch {
         return null;
       }
     }
 
-    function estimatePrice(budgetStr, runtimeStr) {
-      let base = 1500000;
-      const minMatch = runtimeStr.match(/(\d+)\s*분/);
-      if (minMatch) {
-        const mins = Number(minMatch[1]);
-        if (mins <= 1) base = 1200000;
-        else if (mins <= 3) base = 1800000;
-        else base = 2500000;
-      }
-
-      const numMatch = budgetStr.match(/(\d+)\s*~\s*(\d+)/);
-      if (numMatch) {
-        const low = Number(numMatch[1]) * 10000;
-        const high = Number(numMatch[2]) * 10000;
-        base = Math.min(Math.max(base, low), high);
-      }
-
-      const shootDays = 1 + (base > 2000000 ? 1 : 0);
-
-      return {
-        total: base,
-        shootDays,
-        directorFee: Math.floor(base * 0.35),
-        dopFee: Math.floor(base * 0.25),
-        gearFee: Math.floor(base * 0.2),
-        postFee: Math.floor(base * 0.2),
-      };
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      const req = parseRequest();
-
-      const projectSummaryEl = document.getElementById("project-summary");
-      const resultMain = document.getElementById("result-main");
-      const noDataMain = document.getElementById("no-data-main");
-
-      if (!req) {
-        projectSummaryEl.textContent =
-          "이전 페이지에서 프로젝트 정보를 찾지 못했습니다.";
-        resultMain.style.display = "none";
-        noDataMain.style.display = "block";
+    function renderSummary(data) {
+      const box = document.getElementById("project-summary");
+      if (!data) {
+        box.textContent =
+          "이전 페이지에서 예약 정보를 찾지 못했습니다. AI 스틸컷 예약을 먼저 진행해 주세요.";
         return;
       }
 
-      const {
-        ProjectTitle,
-        VideoType,
-        Runtime,
-        Budget,
-        Location,
-        Message,
-      } = req;
+      box.innerHTML = `
+        <strong>${data.ProjectTitle || "제목 미입력"}</strong><br/>
+        Type: ${data.VideoType || "미입력"} · 러닝타임: ${
+        data.Runtime || "미입력"
+      }<br/>
+        예산: ${data.Budget || "미정"}<br/>
+        촬영일: ${data.ShootDate || "미정"} / 지역: ${
+        data.Location || "미입력"
+      }<br/>
+        Reference: ${
+          data.ReferenceLink
+            ? `<a href="${data.ReferenceLink}" target="_blank">링크 열기</a>`
+            : "없음"
+        }<br/><br/>
+        스타일 메모:<br/>
+        ${(data.Message || "").replace(/\n/g, "<br/>") || "없음"}
+      `;
+    }
 
-      projectSummaryEl.textContent =
-        `프로젝트: ${ProjectTitle || "-"} · 타입: ${VideoType || "-"} · 러닝타임: ${Runtime ||
-          "-"} · 예산: ${Budget || "미정"} · 지역: ${Location || "-"}`;
+    function simpleRecommend(data) {
+      const mood = (data?.Message || "").toLowerCase();
+      const type = (data?.VideoType || "").toLowerCase();
+      const budget = data?.Budget || "";
 
-      const directorEl = document.getElementById("director-rec");
-      let directorText = "";
-      if (/웨딩|wedding/i.test(VideoType || "")) {
-        directorText =
-          "감정선과 순간 포착에 강한 웨딩/라이프 스타일 디렉터를 추천합니다. " +
-          "소규모 팀으로 움직이며 동선이 많은 하루 촬영에 익숙한 타입입니다.";
-      } else if (/패션|fashion/i.test(VideoType || "")) {
-        directorText =
-          "옷의 질감과 모델의 리듬을 중요하게 보는 패션/룩북 디렉터가 어울립니다. " +
-          "조명 구조를 미니멀하게 가져가면서도 프레임 안의 그래픽을 잘 뽑는 타입입니다.";
-      } else if (/MV|뮤직|music/i.test(VideoType || "")) {
-        directorText =
-          "뮤직비디오 경험이 있는 인디 디렉터를 추천합니다. " +
-          "타이트한 일정 안에서 콘셉트를 유지하면서도 유연하게 변형할 수 있는 사람입니다.";
+      const directorEl = document.getElementById("director-recommend");
+      const gearEl = document.getElementById("gear-recommend");
+      const shotEl = document.getElementById("shot-recommend");
+      const stillEl = document.getElementById("stillcut-recommend");
+      const budgetEl = document.getElementById("budget-recommend");
+
+      // 감독 추천
+      if (mood.includes("a24") || mood.includes("필름") || mood.includes("시네마")) {
+        directorEl.textContent =
+          "롱테이크와 여백을 잘 쓰는 시네마틱 연출 감독과의 조합이 좋겠습니다. 인물의 표정과 공간의 공기를 동시에 담아내는 스타일이에요.";
+      } else if (type.includes("패션") || mood.includes("네온") || mood.includes("컬러")) {
+        directorEl.textContent =
+          "컬러감과 프레임 디자인에 강한 패션/광고 출신 감독을 추천드립니다. 룩과 공간을 한 프레임 안에서 그래픽처럼 정리하는 스타일입니다.";
+      } else if (type.includes("웨딩")) {
+        directorEl.textContent =
+          "다큐처럼 담담하게 따라가되, 하이라이트 순간만 감정선을 끌어올리는 웨딩 필름 감독이 어울립니다.";
       } else {
-        directorText =
-          "브랜드 톤과 내러티브를 함께 설계할 수 있는 브랜딩 필름 중심 디렉터를 추천합니다. " +
-          "클라이언트 커뮤니케이션에 익숙하고, 후반까지 톤을 책임지는 타입입니다.";
+        directorEl.textContent =
+          "브랜딩/콘텐츠 전반을 다뤄본 종합 연출 감독과의 매칭을 추천합니다. 메시지 구조를 먼저 잡고, 그 위에 톤과 무드를 얹는 스타일입니다.";
       }
-      directorEl.textContent = directorText;
 
-      const gearEl = document.getElementById("gear-rec");
-      gearEl.textContent =
-        "카메라는 SONY FX3 또는 동급 시네마 라인 바디, " +
-        "기본 줌 + 상황에 따라 광각/망원 조합을 추천합니다. " +
-        "씬 규모가 크지 않다면 2-Light 구성(키라이트 + 링/엣지)과 " +
-        "간단한 무선 오디오 세트로 충분합니다. " +
-        "무빙이 많은 경우 짐벌 1대, 그렇지 않다면 삼각대 + 모노포드 조합이 효율적입니다.";
+      // 장비 추천
+      const gearList = [];
 
-      const shotEl = document.getElementById("shot-rec");
-      shotEl.textContent =
-        "1) 오프닝 시퀀스 – 브랜드/인물의 분위기를 한 번에 보여주는 와이드 샷, " +
-        "2) 핵심 액션 클로즈업 – 손/시선/제품 등, " +
-        "3) 공간을 설명하는 미디엄 와이드, " +
-        "4) 마무리용 실루엣 혹은 디테일 샷을 기본 구조로 제안합니다. " +
-        "전체 러닝타임에 따라 이 중 일부를 반복/변주하는 구성이 좋습니다.";
+      if (budget.includes("300") || budget.includes("500")) {
+        gearList.push("· Sony FX3 + 표준 줌렌즈 세트");
+        gearList.push("· 2대 정도의 LED 라이트 + 소프트박스");
+        gearList.push("· 짐벌 1대 (무빙이 많은 경우)");
+      } else if (budget.includes("100") || budget.includes("200")) {
+        gearList.push("· A7S 계열 또는 동급 미러리스 + 단렌즈 1~2개");
+        gearList.push("· 간단한 LED 패널 1~2개");
+      } else if (budget.includes("700") || budget.includes("1000")) {
+        gearList.push("· FX3 / FX6급 바디 + 시네렌즈 세트");
+        gearList.push("· 3점 조명 세트 + 키/필/백 조명 구성");
+        gearList.push("· 슬라이더 또는 모터라이즈드 헤드");
+      } else {
+        gearList.push("· 최소 구성: FX3 또는 동급 바디 + 표준 줌렌즈");
+        gearList.push("· 현장/장소에 따라 조명/음향 세트 추가 제안");
+      }
 
-      const stillEl = document.getElementById("stillcut-desc");
+      gearEl.innerHTML = gearList.map((g) => `<li>${g}</li>`).join("");
+
+      // 샷팅 스타일
+      if (mood.includes("다큐") || mood.includes("담담")) {
+        shotEl.textContent =
+          "핸드헬드 롱테이크 위주의 다큐 스타일. 인위적인 무빙보다는 인물의 동선을 따라가는 구성을 추천합니다.";
+      } else if (mood.includes("네온") || mood.includes("야간")) {
+        shotEl.textContent =
+          "네온과 하이라이트를 살리는 저조도 시네마 룩. 슬로우 무브와 틸트/팬 조합으로 장면마다 포인트를 줍니다.";
+      } else {
+        shotEl.textContent =
+          "와이드로 공간을 먼저 소개한 뒤, 미디엄/클로즈샷으로 디테일을 쌓는 구조를 추천합니다. 프로젝트 목적에 따라 VO/인터뷰 컷을 섞을 수 있습니다.";
+      }
+
+      // 예상 스틸컷 설명
       stillEl.textContent =
-        "주인공을 중앙에서 한 발 비켜 세운 미디엄 샷, " +
-        "배경에는 브랜드 톤에 맞는 색감을 가진 조명이 은은하게 깔려 있습니다. " +
-        "피사체의 눈에는 소프트한 반사가 들어오고, 주변은 살짝 어둡게 떨어져 " +
-        "시선이 자연스럽게 인물과 제품으로 모이게 됩니다. " +
-        "전체적으로는 필름 그레인이 얇게 깔린 느낌의 스틸컷을 기준으로 생각했습니다.";
+        "인물과 공간의 관계가 명확히 드러나는 장면 1~2컷을 기준으로 스틸컷을 구성합니다. 브랜드 로고/제품이 자연스럽게 프레임 안에 들어오도록 컴포지션을 잡습니다.";
 
-      const priceEl = document.getElementById("price-summary");
-      const priceInfo = estimatePrice(Budget || "", Runtime || "");
-      priceEl.innerHTML =
-        "예상 총 금액: " +
-        priceInfo.total.toLocaleString() +
-        "원<br>" +
-        "· 촬영일: 약 " +
-        priceInfo.shootDays +
-        "일<br>" +
-        "· 감독 디렉팅: " +
-        priceInfo.directorFee.toLocaleString() +
-        "원<br>" +
-        "· 촬영(DOP) & 오퍼레이터: " +
-        priceInfo.dopFee.toLocaleString() +
-        "원<br>" +
-        "· 장비/렌탈: " +
-        priceInfo.gearFee.toLocaleString() +
-        "원<br>" +
-        "· 편집/컬러/사운드 등 후반: " +
-        priceInfo.postFee.toLocaleString() +
-        "원";
+      // 예상 견적 (러프)
+      let budgetText = "입력해주신 예산 범위를 기준으로 1~2일 촬영 플랜이 가능해 보입니다.";
 
-      resultMain.style.display = "block";
-      noDataMain.style.display = "none";
-    });
+      if (!budget || budget === "미정") {
+        budgetText =
+          "예산이 미정인 상태라, 최소 구성(1일 촬영 / 1캠 / 소규모 조명 기준)으로 산정 후, 협의 과정에서 단계별 업그레이드 옵션을 제안드리게 됩니다.";
+      }
+
+      budgetEl.textContent = budgetText;
+    }
+
+    const data = loadRequest();
+    renderSummary(data);
+    if (data) simpleRecommend(data);
   </script>
 </body>
 </html>

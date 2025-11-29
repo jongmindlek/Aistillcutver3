@@ -8,6 +8,7 @@
 </head>
 <body>
   <div class="app-shell">
+    <!-- HEADER + 서브 네비 -->
     <header>
       <div class="logo-wrap">
         <div class="logo-mark"><span></span></div>
@@ -21,6 +22,17 @@
         <a href="equipment.html" class="active">GEAR</a>
         <a href="ai-stillcut.html">AI STILLCUT</a>
       </nav>
+
+      <!-- 기어 서브 네비 -->
+      <div class="subnav">
+        <button class="subnav-button active" data-scroll="#gear-section">촬영</button>
+        <button class="subnav-button" data-scroll="#gear-section">촬영 악세서리</button>
+        <button class="subnav-button" data-scroll="#gear-section">조명</button>
+        <button class="subnav-button" data-scroll="#gear-section">조명 악세서리</button>
+        <button class="subnav-button" data-scroll="#gear-section">음향</button>
+        <button class="subnav-button" data-scroll="#gear-section">연출</button>
+        <button class="subnav-button" data-scroll="#cart-section">장바구니</button>
+      </div>
     </header>
 
     <!-- HERO -->
@@ -49,7 +61,7 @@
 
     <main>
       <!-- 1. 장비 선택 + 날짜 -->
-      <section class="card">
+      <section class="card" id="gear-section">
         <div class="card-header">
           <div>
             <div class="card-title">장비 선택</div>
@@ -111,7 +123,7 @@
       </section>
 
       <!-- 2. 장바구니 + 할인 / 내역서 -->
-      <section class="card">
+      <section class="card" id="cart-section">
         <div class="card-header">
           <div>
             <div class="card-title">장바구니 & 내역서</div>
@@ -200,7 +212,7 @@
   </div>
 
   <script>
-    // --- 공통 함수 ---
+    // 공통 함수
     function calcDays(startStr, endStr) {
       const s = new Date(startStr);
       const e = new Date(endStr);
@@ -211,7 +223,23 @@
         : Math.floor(diff / (1000 * 60 * 60 * 24)) + 1;
     }
 
-    // --- 장비 선택 ---
+    // 서브 네비 스크롤
+    document.querySelectorAll(".subnav-button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".subnav-button")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const target = btn.dataset.scroll;
+        if (target) {
+          const el = document.querySelector(target);
+          if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      });
+    });
+
+    // 장비 선택
     let selectedGear = null;
     const gearItems = document.querySelectorAll(".gear-item");
     const selectedGearText = document.getElementById("selected-gear-text");
@@ -266,7 +294,7 @@
       });
     });
 
-    // --- 장바구니 ---
+    // 장바구니
     const cart = [];
     const cartListEl = document.getElementById("cart-list");
     const discountSelect = document.getElementById("discount-type");
@@ -388,7 +416,7 @@
         renderCart();
       });
 
-    // --- 최종 예약 전송 ---
+    // 최종 예약 전송
     document
       .getElementById("submit-reservation")
       .addEventListener("click", async () => {
@@ -447,7 +475,6 @@
         }
       });
 
-    // 초기 상태 렌더
     renderCart();
   </script>
 </body>

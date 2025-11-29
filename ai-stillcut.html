@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Stillcut – fiducia collective</title>
+  <title>AI Stillcut 예약 – fiducia collective</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -13,7 +13,7 @@
         <div class="logo-mark"><span></span></div>
         <div class="logo-text">
           <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
-          <div class="logo-text-sub">AI STILLCUT & DIRECTOR STYLE PREVIEW</div>
+          <div class="logo-text-sub">AI STILLCUT · 스타일 프리뷰 예약</div>
         </div>
       </div>
       <nav>
@@ -27,19 +27,20 @@
       <div class="hero-inner">
         <div class="hero-pill">
           <span class="hero-pill-dot"></span>
-          Reference 기반 스타일 프리뷰
+          AI 스틸컷 신청 / 예약 폼
         </div>
         <h1 class="hero-title">
-          “이 레퍼런스 무드로,<br />
-          우리 브랜드를 찍어줘.”
+          촬영 전에,<br />
+          우리 영상의 “한 장면”을 먼저 보는 예약.
         </h1>
         <p class="hero-desc">
-          레퍼런스 링크와 프로젝트 정보를 보내주면,  
-          AI가 톤·무드·구도를 분석해서 예상 스틸컷과 어울리는 감독 스타일을 제안합니다.
+          이 폼은 <strong>AI 스틸컷 제작 + 감독/장비/샷팅 추천</strong>을 예약하는 창구입니다.<br />
+          제출 후, 다음 화면에서 추천 감독 / 추천 장비 / 추천 샷팅 / 예상 스틸컷 / 예상 가격을 확인할 수 있어요.
         </p>
         <div class="hero-meta">
-          <span>브랜딩 / 웨딩 / 패션 / MV 모두 지원</span>
-          <span>AI Stillcut Reservation DB 연동</span>
+          <span>1) 프로젝트 정보 입력</span>
+          <span>2) 레퍼런스 & 무드 공유</span>
+          <span>3) 결과 화면에서 제안 확인</span>
         </div>
       </div>
     </section>
@@ -48,21 +49,10 @@
       <section class="card">
         <div class="card-header">
           <div>
-            <div class="card-title">AI 스틸컷 요청 폼</div>
+            <div class="card-title">AI 스틸컷 예약 폼</div>
             <div class="card-sub">
-              최대한 솔직하게 적을수록, 결과물에 가까운 스틸컷이 나옵니다.
+              최대한 솔직하게 적을수록, 결과물이 현실에 가까워집니다.
             </div>
-          </div>
-        </div>
-
-        <div class="form-meta-grid" style="margin-bottom: 14px;">
-          <div class="form-meta-item">
-            <span class="label">추천 레퍼런스 톤</span>
-            <span class="value">A24, indie film, film grain, low key lighting</span>
-          </div>
-          <div class="form-meta-item">
-            <span class="label">출력</span>
-            <span class="value">예상 스틸컷 + 감독 스타일 제안</span>
           </div>
         </div>
 
@@ -71,7 +61,7 @@
             <label>프로젝트 제목 (Project Title)</label>
             <input
               id="ProjectTitle"
-              placeholder="예: 브랜드 필름 / 앨범 티저 / 룩북 영상"
+              placeholder="예: 브랜드 필름 / 앨범 티저 / 룩북 / 웨딩 필름"
             />
           </div>
 
@@ -103,40 +93,39 @@
           <div class="form-two-cols">
             <div class="input-group">
               <label>예산 (Budget)</label>
-              <input id="Budget" placeholder="예: 300~500만 원" />
+              <input id="Budget" placeholder="예: 300~500만 원 / 미정" />
             </div>
             <div class="input-group">
-              <label>Shoot Date</label>
+              <label>예상 촬영일 (Shoot Date)</label>
               <input id="ShootDate" type="date" />
             </div>
           </div>
 
           <div class="form-two-cols">
             <div class="input-group">
-              <label>Location</label>
-              <input id="Location" placeholder="예: 서울 성수 / 부산 해운대" />
+              <label>촬영 지역 (Location)</label>
+              <input id="Location" placeholder="예: 서울 성수 / 부산 해운대 / 해외" />
             </div>
             <div class="input-group">
               <label>Reference Link</label>
               <input
                 id="ReferenceLink"
-                placeholder="무드 레퍼런스 YouTube / Pinterest / 이미지 링크"
+                placeholder="YouTube / Pinterest / 이미지 링크 등 무드 레퍼런스"
               />
             </div>
           </div>
 
           <div class="input-group">
-            <label>Message (스타일 설명)</label>
+            <label>스타일 / 무드 설명 (Message)</label>
             <textarea
               id="Message"
-              placeholder="예: 필름 톤, 인물 중심, 네온/야간, 자연광만, 다큐처럼 담담하게, 롱테이크, 핸드헬드 위주 등 마음껏 적어주세요."
+              placeholder="예: A24 느낌, 필름 톤, 인물 위주, 네온/야간, 자연광만, 다큐처럼 담담하게 등 마음껏 적어주세요."
             ></textarea>
           </div>
 
-          <button type="button" id="ai-submit">AI 스틸컷 요청 보내기</button>
+          <button type="button" id="ai-submit">AI 스틸컷 예약 + 결과 보기</button>
           <p class="footer-note">
-            제출 즉시 Notion AI Stillcut Reservation DB에 기록됩니다.  
-            실제 스틸컷 이미지 생성 파이프라인은 이후에 천천히 붙여가면 돼요.
+            제출 시 Notion DB에 기록되고, 바로 이어지는 결과 화면에서 AI 기반 추천 결과를 확인할 수 있습니다.
           </p>
         </form>
       </section>
@@ -172,15 +161,16 @@
         });
 
         const json = await res.json();
-        if (json.ok) {
-          alert("AI 스틸컷 요청이 접수되었습니다!");
-          document.getElementById("ai-form").reset();
-        } else {
-          alert("서버에서 오류가 났습니다. 잠시 후 다시 시도해 주세요.");
+        if (!json.ok) {
+          alert("서버 오류: " + (json.error || ""));
+          return;
         }
+
+        localStorage.setItem("fiducia_ai_request", JSON.stringify(body));
+        window.location.href = "ai-stillcut-result.html";
       } catch (e) {
         console.error(e);
-        alert("연결에 문제가 있습니다. 인터넷이나 서버 상태를 확인해 주세요.");
+        alert("연결에 문제가 있습니다. 잠시 후 다시 시도해 주세요.");
       }
     });
   </script>

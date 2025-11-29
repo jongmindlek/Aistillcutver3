@@ -1,4 +1,3 @@
-// netlify/functions/ai-stillcut-request.js
 const { Client } = require("@notionhq/client");
 
 exports.handler = async (event) => {
@@ -9,10 +8,9 @@ exports.handler = async (event) => {
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
 
-    // ✅ 너가 쓰는 이름 + 내가 쓴 이름 둘 다 지원
     const STILL_DB =
       process.env.NOTION_STILLCUT_DB ||
-      process.env.NOTION_AI_STILLCUT_DB_ID; // ← 캡처에서 보인 이름
+      process.env.NOTION_AI_STILLCUT_DB_ID;
 
     if (!NOTION_TOKEN || !STILL_DB) {
       return {
@@ -49,12 +47,8 @@ exports.handler = async (event) => {
       ProjectTitle: ProjectTitle
         ? { rich_text: [{ text: { content: ProjectTitle } }] }
         : undefined,
-      Phone: Phone
-        ? { rich_text: [{ text: { content: Phone } }] }
-        : undefined,
-      Email: Email
-        ? { rich_text: [{ text: { content: Email } }] }
-        : undefined,
+      Phone: Phone ? { rich_text: [{ text: { content: Phone } }] } : undefined,
+      Email: Email ? { rich_text: [{ text: { content: Email } }] } : undefined,
       VideoType: VideoType
         ? { rich_text: [{ text: { content: VideoType } }] }
         : undefined,
@@ -70,9 +64,7 @@ exports.handler = async (event) => {
       Location: Location
         ? { rich_text: [{ text: { content: Location } }] }
         : undefined,
-      ReferenceLink: ReferenceLink
-        ? { url: ReferenceLink }
-        : undefined,
+      ReferenceLink: ReferenceLink ? { url: ReferenceLink } : undefined,
       Message: Message
         ? { rich_text: [{ text: { content: Message } }] }
         : undefined,

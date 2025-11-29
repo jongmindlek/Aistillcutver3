@@ -41,7 +41,7 @@
         </div>
         <h1 class="hero-title">
           촬영 전에,<br />
-          우리 영상의 “한 장면”을 먼저 보는 예약.
+          우리 영상의 한 장면을 먼저 보는 예약.
         </h1>
         <p class="hero-desc">
           이 폼은 <strong>AI 스틸컷 제작 + 감독/장비/샷팅 추천</strong>을 예약하는 창구입니다.<br />
@@ -61,7 +61,8 @@
           <div>
             <div class="card-title">AI 스틸컷 예약 폼</div>
             <div class="card-sub">
-              최대한 솔직하게 적을수록, 결과물이 현실에 가까워집니다.
+              정확한 정보일수록 더 정교한 결과가 나옵니다.<br />
+              모든 항목을 다 채우지 않아도 제출할 수 있어요.
             </div>
           </div>
         </div>
@@ -129,7 +130,7 @@
             <label>스타일 / 무드 설명 (Message)</label>
             <textarea
               id="Message"
-              placeholder="예: A24 느낌, 필름 톤, 인물 위주, 네온/야간, 자연광만, 다큐처럼 담담하게 등 마음껏 적어주세요."
+              placeholder="예: A24 느낌, 필름 톤, 인물 위주, 네온/야간, 자연광만, 다큐처럼 담담하게 등"
             ></textarea>
           </div>
 
@@ -143,7 +144,7 @@
   </div>
 
   <script>
-    // 서브 네비 동작
+    // 서브 네비
     document.querySelectorAll(".subnav-button").forEach((btn) => {
       btn.addEventListener("click", () => {
         const link = btn.dataset.link;
@@ -197,6 +198,7 @@
           return;
         }
 
+        // 결과 페이지에서 쓸 수 있도록 저장
         localStorage.setItem("fiducia_ai_request", JSON.stringify(body));
         window.location.href = "ai-stillcut-result.html";
       } catch (e) {

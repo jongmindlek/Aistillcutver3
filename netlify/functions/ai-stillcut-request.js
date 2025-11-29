@@ -8,7 +8,11 @@ exports.handler = async (event) => {
 
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
-    const STILL_DB = process.env.NOTION_STILLCUT_DB;
+
+    // ✅ 너가 쓰는 이름 + 내가 쓴 이름 둘 다 지원
+    const STILL_DB =
+      process.env.NOTION_STILLCUT_DB ||
+      process.env.NOTION_AI_STILLCUT_DB_ID; // ← 캡처에서 보인 이름
 
     if (!NOTION_TOKEN || !STILL_DB) {
       return {
@@ -16,7 +20,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({
           ok: false,
           error:
-            "환경변수 NOTION_TOKEN / NOTION_STILLCUT_DB 를 확인해 주세요.",
+            "NOTION_TOKEN 또는 NOTION_STILLCUT_DB / NOTION_AI_STILLCUT_DB_ID 환경변수를 확인해 주세요.",
         }),
       };
     }

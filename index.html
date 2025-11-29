@@ -1,161 +1,31 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>fiducia collective – 브랜드 신뢰를 설계하는 영상 프로덕션</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="app-shell">
-    <!-- HEADER -->
-    <header>
-      <div class="logo-wrap">
-        <div class="logo-mark"><span></span></div>
-        <div class="logo-text">
-          <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
-          <div class="logo-text-sub">브랜드 신뢰를 설계하는 영상 프로덕션 네트워크</div>
-        </div>
-      </div>
-      <nav>
-        <a href="index.html" class="active">HOME</a>
-        <a href="equipment.html">GEAR</a>
-        <a href="ai-stillcut.html">AI STILLCUT</a>
-      </nav>
-    </header>
+<script>
+  // Notion WORKS 불러오기
+  document.addEventListener("DOMContentLoaded", async () => {
+    const container = document.getElementById("works-list");
 
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-inner">
-        <div class="hero-pill">
-          <span class="hero-pill-dot"></span>
-          fiducia collective · 속도 & 공인인증
-        </div>
-        <h1 class="hero-title">
-          빠르게 움직이되<br />
-          가볍게 만들지는 않는,<br />
-          <span class="accent">fiducia collective</span>
-        </h1>
-        <p class="hero-desc">
-          프리랜서 감독·촬영·조명 네트워크와 실무 프로덕션 운영을 한 데 묶어,<br />
-          브랜드의 신뢰를 설계하는 영상들을 만듭니다.<br />
-          “급한데 퀄리티도 포기 못 할 때” 떠올려질 팀을 목표로 합니다.
-        </p>
-        <div class="hero-meta">
-          <span>브랜딩 필름 · 웨딩 · 패션 · MV</span>
-          <span>장비 · 인력 · 일정 관리까지 한 번에</span>
-          <span>AI 스틸컷으로 사전 스타일 프리뷰</span>
-        </div>
-      </div>
-    </section>
+    try {
+      const res = await fetch("/.netlify/functions/works-list");
+      const json = await res.json();
 
-    <main>
-      <!-- WORKS (Notion 연동 리스트) -->
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">WORKS</div>
-            <div class="card-sub">
-              fiducia collective에서 실제로 작업한 / 작업 중인 프로젝트들입니다.
-              (Notion WORK DB에서 자동으로 불러옵니다)
-            </div>
-          </div>
-        </div>
+      console.log("WORKS RESPONSE:", json); // 디버그용
 
-        <div id="works-list">
-          <p class="card-sub">작업 목록을 불러오는 중입니다…</p>
-        </div>
-
-        <p class="footer-note">
-          WORKS용 Notion DB에 새 프로젝트를 추가하면 이 화면에도 자동으로 반영됩니다.
-        </p>
-      </section>
-
-      <!-- CONTACT -->
-      <section class="card">
-        <div class="card-header">
-          <div>
-            <div class="card-title">CONTACT</div>
-            <div class="card-sub">어디서부터 시작해야 할지 모를 때, 여기로 주세요.</div>
-          </div>
-        </div>
-        <p class="card-sub">Instagram · @fiducia.collective (사용 중인 계정으로 교체)</p>
-        <p class="card-sub">Email · contact@fiducia-collective.com (실제 메일로 교체)</p>
-        <p class="footer-note">
-          “이 무드로 우리 브랜드 영상 가능할까?” 같은 가벼운 질문부터  
-          예산·일정이 이미 정해진 브리프까지, 편한 쪽으로 먼저 던져 주세요.
-        </p>
-      </section>
-    </main>
-  </div>
-
-  <script>
-    // Notion WORKS 불러오기
-    document.addEventListener("DOMContentLoaded", async () => {
-      const container = document.getElementById("works-list");
-
-      try {
-        const res = await fetch("/.netlify/functions/works-list");
-        const json = await res.json();
-
-        if (!json.ok) {
-          container.innerHTML =
-            '<p class="card-sub">WORKS를 불러오는 중 오류가 발생했습니다.</p>';
-          return;
-        }
-
-        const items = json.items || [];
-        if (!items.length) {
-          container.innerHTML =
-            '<p class="card-sub">아직 등록된 WORK가 없습니다. Notion WORK DB에 프로젝트를 추가해 주세요.</p>';
-          return;
-        }
-
-        const grid = document.createElement("div");
-        grid.className = "form-meta-grid";
-
-        items.forEach((item) => {
-          const div = document.createElement("div");
-          div.className = "form-meta-item";
-
-          const labelSpan = document.createElement("span");
-          labelSpan.className = "label";
-          labelSpan.textContent =
-            (item.type || "PROJECT") +
-            (item.year ? " · " + item.year : "");
-
-          const valueSpan = document.createElement("span");
-          valueSpan.className = "value";
-
-          let text = "";
-          if (item.client) text += "[" + item.client + "] ";
-          text += item.title || "Untitled";
-
-          if (item.url) {
-            const a = document.createElement("a");
-            a.href = item.url;
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-            a.textContent = text;
-            valueSpan.appendChild(a);
-          } else {
-            valueSpan.textContent = text;
-          }
-
-          div.appendChild(labelSpan);
-          div.appendChild(valueSpan);
-
-          grid.appendChild(div);
-        });
-
-        container.innerHTML = "";
-        container.appendChild(grid);
-      } catch (e) {
-        console.error(e);
+      if (!json.ok) {
         container.innerHTML =
-          '<p class="card-sub">WORKS를 불러오는 중 네트워크 오류가 발생했습니다.</p>';
+          '<p class="card-sub">WORKS 오류: ' +
+          (json.error || "알 수 없는 오류") +
+          "</p>";
+        return;
       }
-    });
-  </script>
-</body>
-</html>
+
+      const items = json.items || [];
+      if (!items.length) {
+        container.innerHTML =
+          '<p class="card-sub">아직 등록된 WORK가 없습니다. Notion WORK DB에 프로젝트를 추가해 주세요.</p>';
+        return;
+      }
+
+      const grid = document.createElement("div");
+      grid.className = "form-meta-grid";
+
+      items.forEach((item) => {
+        const div = document

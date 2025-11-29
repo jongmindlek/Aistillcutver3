@@ -3,72 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TRUST PRODUCTION – 메인</title>
+  <title>TRUST PRODUCTION – Director’s Market</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo">TRUST PRODUCTION</div>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="equipment.html">장비 예약</a>
-      <a href="ai-stillcut.html">AI 스틸컷</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="card">
-      <h1>프리랜서 영상 프로덕션 플랫폼</h1>
-      <p>
-        감독·촬영·조명 프리랜서를 빠르게 매칭하고, AI 스틸컷으로 예상 결과물을
-        확인할 수 있는 TRUST PRODUCTION 베이스 버전입니다.
-      </p>
-    </section>
-
-    <section class="card">
-      <h2>원하는 서비스 선택</h2>
-      <p>체크박스를 눌러 필요한 서비스 설명을 펼쳐보세요.</p>
-
-      <div class="checkbox-row">
-        <label><input type="checkbox" id="cb-equipment" /> 장비 예약</label>
-        <label><input type="checkbox" id="cb-director" /> 감독·스태프 예약</label>
-        <label><input type="checkbox" id="cb-ai" /> AI 스틸컷</label>
+  <div class="app-shell">
+    <header>
+      <div class="logo-wrap">
+        <div class="logo-mark"><span></span></div>
+        <div class="logo-text">
+          <div class="logo-text-main">TRUST PRODUCTION</div>
+          <div class="logo-text-sub">DIRECTOR’S MARKET · FILM STUDIO</div>
+        </div>
       </div>
+      <nav>
+        <a href="index.html" class="active">HOME</a>
+        <a href="equipment.html">GEAR</a>
+        <a href="ai-stillcut.html">AI STILLCUT</a>
+      </nav>
+    </header>
 
-      <div id="section-equipment" class="hidden">
-        <h3>장비 예약</h3>
-        <p>카메라, 조명, 짐벌 등 1인 촬영에 최적 패키지를 예약합니다.</p>
-        <p><a href="equipment.html">👉 장비 예약 페이지로 이동</a></p>
-      </div>
-
-      <div id="section-director" class="hidden">
-        <h3>감독·스태프 예약</h3>
-        <p>프로젝트 단위로 촬영/조명 스태프를 요청할 수 있는 기능입니다.</p>
-      </div>
-
-      <div id="section-ai" class="hidden">
-        <h3>AI 스틸컷</h3>
-        <p>레퍼런스 이미지/링크 기반으로 AI 스틸컷을 생성하는 기능입니다.</p>
-        <p><a href="ai-stillcut.html">👉 AI 스틸컷 페이지로 이동</a></p>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          실시간 프리랜서 프로덕션
+        </div>
+        <h1 class="hero-title">
+          토스처럼 <span class="accent">깔끔하게,</span><br />
+          A24처럼 <span class="accent">영화적으로.</span>
+        </h1>
+        <p class="hero-desc">
+          촬영 감독·조명·장비·AI 스틸컷까지, 한 번에 정리된 영상 제작
+          허브. 작은 브랜드도, 인디 뮤직비디오도, 더 이상 어설프지 않게.
+        </p>
+        <div class="hero-meta">
+          <span>프리랜서 감독 / 촬영 네트워크</span>
+          <span>Gear Reservation · AI Style Preview</span>
+          <span>Verified Director 시스템 준비 중</span>
+        </div>
       </div>
     </section>
-  </main>
+
+    <main>
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">무엇이 필요해?</div>
+            <div class="card-sub">
+              아래 옵션을 켜면, 각각의 서비스 설명이 펼쳐져.
+            </div>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label class="checkbox-pill">
+            <input type="checkbox" id="cb-equipment" />
+            장비 예약
+          </label>
+          <label class="checkbox-pill">
+            <input type="checkbox" id="cb-director" />
+            감독·스태프
+          </label>
+          <label class="checkbox-pill">
+            <input type="checkbox" id="cb-ai" />
+            AI 스틸컷
+          </label>
+        </div>
+
+        <div id="section-equipment" class="hidden" style="margin-top: 10px;">
+          <h3 style="margin: 0 0 6px; font-size: 15px;">장비 예약 · Gear Reservation</h3>
+          <p class="card-sub" style="margin-bottom: 6px;">
+            FX3, 짐벌, 조명까지. 1인 촬영 혹은 소규모 팀 촬영에 최적화된
+            패키지를 날짜·시간 단위로 예약해.
+          </p>
+          <p class="card-sub">
+            <a href="equipment.html">👉 장비 예약 페이지로 이동</a>
+          </p>
+        </div>
+
+        <div id="section-director" class="hidden" style="margin-top: 10px;">
+          <h3 style="margin: 0 0 6px; font-size: 15px;">감독·스태프 매칭</h3>
+          <p class="card-sub">
+            브랜드 필름, 웨딩, 패션, 뮤직비디오까지. 프로젝트에 맞는 감독 /
+            촬영 / 조명 스태프 매칭 시스템을 준비 중이야. 지금은 DM으로만
+            조용히 연결해 줄게.
+          </p>
+        </div>
+
+        <div id="section-ai" class="hidden" style="margin-top: 10px;">
+          <h3 style="margin: 0 0 6px; font-size: 15px;">AI 스틸컷 · 스타일 프리뷰</h3>
+          <p class="card-sub" style="margin-bottom: 6px;">
+            레퍼런스 링크 한 장이면, AI가 감도·톤·색감을 분석해서 시그니처
+            스틸컷과 어울리는 감독 스타일을 제안해.
+          </p>
+          <p class="card-sub">
+            <a href="ai-stillcut.html">👉 AI 스틸컷 요청 페이지로 이동</a>
+          </p>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">연락 · Contact</div>
+            <div class="card-sub">가장 빠른 문의 채널들</div>
+          </div>
+        </div>
+        <p class="card-sub">Instagram · @fiducia.collective</p>
+        <p class="card-sub">Email · example@trust-production.com</p>
+        <p class="footer-note">
+          “이 톤 그대로 우리 브랜드 영상 만들 수 있어?” 같은 질문도 환영이야.
+        </p>
+      </section>
+    </main>
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      function toggle(box, section) {
-        document.getElementById(section).classList.toggle("hidden", !box.checked);
-      }
+      const cbEquipment = document.getElementById("cb-equipment");
+      const cbDirector = document.getElementById("cb-director");
+      const cbAi = document.getElementById("cb-ai");
 
-      document.getElementById("cb-equipment").addEventListener("change", (e) =>
-        toggle(e.target, "section-equipment")
-      );
-      document.getElementById("cb-director").addEventListener("change", (e) =>
-        toggle(e.target, "section-director")
-      );
-      document.getElementById("cb-ai").addEventListener("change", (e) =>
-        toggle(e.target, "section-ai")
-      );
+      const secEquipment = document.getElementById("section-equipment");
+      const secDirector = document.getElementById("section-director");
+      const secAi = document.getElementById("section-ai");
+
+      cbEquipment.addEventListener("change", () => {
+        secEquipment.classList.toggle("hidden", !cbEquipment.checked);
+      });
+      cbDirector.addEventListener("change", () => {
+        secDirector.classList.toggle("hidden", !cbDirector.checked);
+      });
+      cbAi.addEventListener("change", () => {
+        secAi.classList.toggle("hidden", !cbAi.checked);
+      });
     });
   </script>
 </body>

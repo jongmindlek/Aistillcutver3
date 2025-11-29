@@ -8,7 +8,12 @@ exports.handler = async (event) => {
 
   try {
     const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
-    const GEAR_DB = process.env.NOTION_GEAR_DB;
+
+    // ✅ 너가 쓰는 이름 + 내가 쓴 이름 둘 다 지원
+    const GEAR_DB =
+      process.env.NOTION_GEAR_DB ||
+      process.env.NOTION_GEAR_DB_ID || // ← 캡처에서 보인 이름
+      process.env.NOTION_GEAR_RESERVATION_DB_ID;
 
     if (!NOTION_TOKEN || !GEAR_DB) {
       return {
@@ -16,7 +21,7 @@ exports.handler = async (event) => {
         body: JSON.stringify({
           ok: false,
           error:
-            "환경변수 NOTION_TOKEN / NOTION_GEAR_DB 를 확인해 주세요.",
+            "NOTION_TOKEN 또는 NOTION_GEAR_DB / NOTION_GEAR_DB_ID / NOTION_GEAR_RESERVATION_DB_ID 환경변수를 확인해 주세요.",
         }),
       };
     }

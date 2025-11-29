@@ -1,32 +1,88 @@
+// netlify/functions/equipment-reserve.js
 const { Client } = require("@notionhq/client");
 
 exports.handler = async (event) => {
+  if (event.httpMethod !== "POST") {
+    return { statusCode: 405, body: "Method Not Allowed" };
+  }
+
   try {
-    const body = JSON.parse(event.body);
-    const notion = new Client({ auth: process.env.NOTION_KEY });
+    const NOTION_TOKEN = process.env.NOTION_TOKEN || process.env.NOTION_KEY;
+    const GEAR_DB =
+      process.env.NOTION_GEAR_DB ||
+      process.env.NOTION_DB_GEAR ||
+      process.env.GEAR_DB_ID;
 
-    await notion.pages.create({
-      parent: { database_id: process.env.NOTION_GEAR_DB },
+    if (!NOTION_TOKEN || !GEAR_DB) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          ok: false,
+          error:
+            "환경변수 NOTION_TOKEN(or NOTION_KEY) / NOTION_GEAR_DB 를 확인해 주세요.",
+        }),
+      };
+    }
 
-      properties: {
-        Title: { title: [{ text: { content: body.Title || "Gear Reservation" } }] },
-        Gear: { rich_text: [{ text: { content: body.Gear || "" } }] },
-        RenterName: { rich_text: [{ text: { content: body.RenterName || "" } }] },
-        ProjectName: { rich_text: [{ text: { content: body.ProjectName || "" } }] },
-        Contact: { rich_text: [{ text: { content: body.Contact || "" } }] },
-        Memo: { rich_text: [{ text: { content: body.Memo || "" } }] },
+    const notion = new Client({ auth: NOTION_TOKEN });
+    const data = JSON.parse(event.body || "{}");
 
-        Date: body.Date
-          ? { date: { start: body.Date } }
-          : undefined,
+    const {
+      Title,
+      ProjectName,
+      RenterName,
+      Contact,
+      Gear, // 장바구니 내역 전체 문자열
+      Date, // 대표 날짜
+      Memo,
+    } = data;
 
-        AutoCreated: { checkbox: true }
-      }
+    const properties = {
+      Title: {
+        title: [{ text: { content: Title || "Gear Reservation" } }],
+      },
+      ProjectName: ProjectName
+        ? { rich_text: [{ text: { content: ProjectName } }] }
+        : undefined,
+      RenterName: RenterName
+        ? { rich_text: [{ text: { content: RenterName } }] }
+        : undefined,
+      Contact: Contact
+        ? { rich_text: [{ text: { content: Contact } }] }
+        : undefined,
+      Gear: Gear
+        ? { rich_text: [{ text: { content: Gear } }] }
+        : undefined,
+      Date: Date
+        ? { date: { start: Date } }
+        : undefined,
+      Memo: Memo
+        ? { rich_text: [{ text: { content: Memo } }] }
+        : undefined,
+      AutoCreated: { checkbox: true },
+    };
+
+    Object.keys(properties).forEach((k) => {
+      if (properties[k] === undefined) delete properties[k];
     });
 
-    return { statusCode: 200, body: JSON.stringify({ ok: true }) };
+    await notion.pages.create({
+      parent: { database_id: GEAR_DB },
+      properties,
+    });
 
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ ok: true }),
+    };
   } catch (err) {
-    return { statusCode: 500, body: JSON.stringify({ ok: false, error: err.message }) };
+    console.error("equipment-reserve error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        ok: false,
+        error: err.message || "알 수 없는 오류",
+      }),
+    };
   }
 };

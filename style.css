@@ -1,81 +1,357 @@
-/* styles.css – 심플 공통 스타일 */
+/* ------------------------------
+   Global
+------------------------------ */
 
 * {
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard",
-    "Apple SD Gothic Neo", sans-serif;
 }
 
+:root {
+  --bg: #050509;
+  --bg-soft: #0c0c14;
+  --bg-card: #0e0f19;
+  --line-soft: rgba(255, 255, 255, 0.06);
+  --line-strong: rgba(255, 255, 255, 0.14);
+  --text-main: #f7f7fa;
+  --text-sub: rgba(247, 247, 250, 0.7);
+  --accent: #4b8dff;
+  --accent-soft: rgba(75, 141, 255, 0.2);
+  --accent-pink: #ff4b8c;
+  --radius-xl: 28px;
+  --radius-md: 18px;
+  --shadow-soft: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --blur-card: 16px;
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", "Pretendard", sans-serif;
+}
+
+html,
 body {
   margin: 0;
   padding: 0;
-  background: #050509;
-  color: #f5f5f5;
+  background: radial-gradient(circle at top left, #181b2d 0, #050509 55%);
+  min-height: 100%;
+  color: var(--text-main);
+  font-family: var(--font-main);
 }
+
+/* 링크 기본 */
 
 a {
   color: inherit;
   text-decoration: none;
 }
 
+a:hover {
+  text-decoration: underline;
+}
+
+/* ------------------------------
+   Layout
+------------------------------ */
+
+.app-shell {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+/* ------------------------------
+   Header / Nav
+------------------------------ */
+
 header {
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  border-radius: 999px;
+  backdrop-filter: blur(18px);
+  background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0.03),
+      rgba(255, 255, 255, 0)
+    ),
+    rgba(5, 5, 15, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
 }
 
-header .logo {
+header .logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+header .logo-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: conic-gradient(
+    from 180deg,
+    #4b8dff,
+    #ff4b8c,
+    #ffe66d,
+    #4b8dff
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(75, 141, 255, 0.7);
+}
+
+header .logo-mark span {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: #050509;
+}
+
+header .logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+header .logo-text-main {
   font-weight: 700;
-  letter-spacing: 0.08em;
   font-size: 14px;
+  letter-spacing: 0.22em;
+}
+
+header .logo-text-sub {
+  font-size: 11px;
+  opacity: 0.7;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
 }
 
 nav a {
-  margin-left: 16px;
-  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid transparent;
   opacity: 0.8;
 }
 
 nav a:hover {
   opacity: 1;
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
-main {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 24px 16px 40px;
+nav a.active {
+  border-color: rgba(255, 255, 255, 0.42);
+  background: rgba(255, 255, 255, 0.04);
+  opacity: 1;
 }
 
-/* 카드 박스 */
-.card {
-  background: rgba(15, 15, 25, 0.95);
-  border-radius: 16px;
-  padding: 20px 18px;
-  margin-bottom: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+/* ------------------------------
+   Hero section (공통 상단)
+------------------------------ */
+
+.hero {
+  margin-bottom: 22px;
+  padding: 24px 22px 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line-soft);
+  background: radial-gradient(circle at top left, #20253c 0, #0b0b14 50%);
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
 }
 
-/* 입력 공통 */
-label {
-  display: block;
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at top right,
+    rgba(255, 75, 140, 0.26),
+    transparent 55%
+  );
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(5, 5, 15, 0.7);
+  margin-bottom: 12px;
+}
+
+.hero-pill-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #4bff8b;
+  box-shadow: 0 0 10px rgba(75, 255, 139, 0.9);
+}
+
+.hero-title {
+  font-size: 26px;
+  line-height: 1.24;
+  margin: 0 0 8px;
+}
+
+.hero-title span.accent {
+  background: linear-gradient(120deg, #4b8dff, #ff4b8c);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-desc {
   font-size: 13px;
+  color: var(--text-sub);
+  margin: 0 0 14px;
+  max-width: 440px;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+.hero-meta span {
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: rgba(5, 5, 15, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ------------------------------
+   Cards
+------------------------------ */
+
+.card {
+  background: rgba(7, 7, 16, 0.96);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line-soft);
+  padding: 18px 18px 20px;
+  margin-bottom: 14px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(var(--blur-card));
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+/* ------------------------------
+   Typography
+------------------------------ */
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+/* ------------------------------
+   Checkbox rows (메인 토글용)
+------------------------------ */
+
+.checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+
+.checkbox-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  font-size: 12px;
+  background: rgba(5, 5, 15, 0.9);
+}
+
+.checkbox-pill input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+}
+
+/* 숨김 처리 */
+
+.hidden {
+  display: none;
+}
+
+/* ------------------------------
+   Form
+------------------------------ */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+label {
+  font-size: 12px;
+  color: var(--text-sub);
   margin-bottom: 4px;
-  opacity: 0.85;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
 }
 
 input,
 textarea,
 select,
 button {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(9, 9, 15, 0.95);
-  color: #f5f5f5;
-  font-size: 14px;
+  border-radius: 11px;
+  border: 1px solid var(--line-strong);
+  background: rgba(8, 8, 16, 0.95);
+  color: var(--text-main);
+  font-family: var(--font-main);
+  font-size: 13px;
+  padding: 10px 11px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(220, 220, 235, 0.35);
 }
 
 textarea {
@@ -83,56 +359,86 @@ textarea {
   resize: vertical;
 }
 
+/* 버튼 */
+
 button {
-  margin-top: 12px;
+  margin-top: 4px;
   cursor: pointer;
-  background: linear-gradient(135deg, #4e7cff, #9b6bff);
   border: none;
+  background: linear-gradient(135deg, #4b8dff, #ff4b8c);
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.7);
   font-weight: 600;
+  letter-spacing: 0.04em;
 }
 
 button:active {
   transform: translateY(1px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.8);
 }
 
-h1 {
-  font-size: 22px;
-  margin-bottom: 8px;
-}
+/* 버튼 보조 */
 
-h2 {
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-p {
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-/* 체크박스 라인 */
-.checkbox-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 8px 0 4px;
-}
-
-.checkbox-row label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  border-radius: 999px;
+.btn-secondary {
+  background: rgba(5, 5, 15, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.16);
-  font-size: 12px;
+  box-shadow: none;
+  font-weight: 500;
 }
 
-.checkbox-row input[type="checkbox"] {
-  width: auto;
+/* ------------------------------
+   Layout: meta grid (폼 상단)
+------------------------------ */
+
+.form-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
 }
 
-/* 섹션 숨김용 */
-.hidden {
-  display: none;
+.form-meta-item {
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(5, 5, 15, 0.85);
+  padding: 8px 10px;
+  font-size: 11px;
+}
+
+.form-meta-item span.label {
+  display: block;
+  opacity: 0.6;
+  margin-bottom: 2px;
+}
+
+.form-meta-item span.value {
+  font-weight: 500;
+}
+
+/* ------------------------------
+   Footer 작은 텍스트
+------------------------------ */
+
+.footer-note {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* ------------------------------
+   Responsive
+------------------------------ */
+
+@media (min-width: 768px) {
+  .hero {
+    padding: 26px 26px 26px;
+  }
+
+  .hero-title {
+    font-size: 30px;
+  }
+
+  .form-two-cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
 }

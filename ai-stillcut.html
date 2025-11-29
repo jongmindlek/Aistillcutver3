@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Stillcut – TRUST PRODUCTION</title>
+  <title>AI Stillcut – fiducia collective</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -12,8 +12,8 @@
       <div class="logo-wrap">
         <div class="logo-mark"><span></span></div>
         <div class="logo-text">
-          <div class="logo-text-main">TRUST PRODUCTION</div>
-          <div class="logo-text-sub">AI STILLCUT BRIEF</div>
+          <div class="logo-text-main">FIDUCIA COLLECTIVE</div>
+          <div class="logo-text-sub">AI STILLCUT & DIRECTOR STYLE PREVIEW</div>
         </div>
       </div>
       <nav>
@@ -27,19 +27,18 @@
       <div class="hero-inner">
         <div class="hero-pill">
           <span class="hero-pill-dot"></span>
-          Style Preview & Director Matching
+          Reference 기반 스타일 프리뷰
         </div>
         <h1 class="hero-title">
-          “이 레퍼런스 느낌으로,<br />
+          “이 레퍼런스 무드로,<br />
           우리 브랜드를 찍어줘.”
         </h1>
         <p class="hero-desc">
           레퍼런스 링크와 프로젝트 정보를 보내주면,  
-          AI가 무드와 톤을 분석해서 스틸컷과 어울리는 감독 스타일을 추천해.
+          AI가 톤·무드·구도를 분석해서 예상 스틸컷과 어울리는 감독 스타일을 제안합니다.
         </p>
         <div class="hero-meta">
-          <span>AI 스타일 분석</span>
-          <span>레퍼런스 기반 스틸컷</span>
+          <span>브랜딩 / 웨딩 / 패션 / MV 모두 지원</span>
           <span>AI Stillcut Reservation DB 연동</span>
         </div>
       </div>
@@ -51,18 +50,18 @@
           <div>
             <div class="card-title">AI 스틸컷 요청 폼</div>
             <div class="card-sub">
-              정보는 간단하게, 대신 무드 설명은 솔직하고 디테일하게.
+              최대한 솔직하게 적을수록, 결과물에 가까운 스틸컷이 나옵니다.
             </div>
           </div>
         </div>
 
         <div class="form-meta-grid" style="margin-bottom: 14px;">
           <div class="form-meta-item">
-            <span class="label">좋아하는 레퍼런스</span>
-            <span class="value">A24 / indie film / film grain</span>
+            <span class="label">추천 레퍼런스 톤</span>
+            <span class="value">A24, indie film, film grain, low key lighting</span>
           </div>
           <div class="form-meta-item">
-            <span class="label">출력 결과</span>
+            <span class="label">출력</span>
             <span class="value">예상 스틸컷 + 감독 스타일 제안</span>
           </div>
         </div>
@@ -72,7 +71,7 @@
             <label>프로젝트 제목 (Project Title)</label>
             <input
               id="ProjectTitle"
-              placeholder="예: 브랜드 필름, 앨범 티저, 룩북 영상"
+              placeholder="예: 브랜드 필름 / 앨범 티저 / 룩북 영상"
             />
           </div>
 
@@ -92,12 +91,12 @@
               <label>Video Type</label>
               <input
                 id="VideoType"
-                placeholder="예: 브랜딩 필름 / 웨딩 / 패션 / MV"
+                placeholder="예: 브랜딩 / 웨딩 / 패션 / MV / 다큐"
               />
             </div>
             <div class="input-group">
               <label>러닝타임 (Runtime)</label>
-              <input id="Runtime" placeholder="예: 30초 / 1분" />
+              <input id="Runtime" placeholder="예: 30초 / 1분 / 3분" />
             </div>
           </div>
 
@@ -115,7 +114,7 @@
           <div class="form-two-cols">
             <div class="input-group">
               <label>Location</label>
-              <input id="Location" placeholder="예: 서울 성수 / 부산 / 해외" />
+              <input id="Location" placeholder="예: 서울 성수 / 부산 해운대" />
             </div>
             <div class="input-group">
               <label>Reference Link</label>
@@ -130,14 +129,14 @@
             <label>Message (스타일 설명)</label>
             <textarea
               id="Message"
-              placeholder="예: 필름 톤, 인물 중심, 네온/야간, 자연광만, 다큐처럼 담담하게 등 최대한 솔직하게."
+              placeholder="예: 필름 톤, 인물 중심, 네온/야간, 자연광만, 다큐처럼 담담하게, 롱테이크, 핸드헬드 위주 등 마음껏 적어주세요."
             ></textarea>
           </div>
 
           <button type="button" id="ai-submit">AI 스틸컷 요청 보내기</button>
           <p class="footer-note">
-            제출 즉시 Notion AI Stillcut Reservation DB에 기록돼.  
-            실제 AI 합성 파이프라인은 순차적으로 붙여 나가면 돼.
+            제출 즉시 Notion AI Stillcut Reservation DB에 기록됩니다.  
+            실제 스틸컷 이미지 생성 파이프라인은 이후에 천천히 붙여가면 돼요.
           </p>
         </form>
       </section>
@@ -161,7 +160,7 @@
       };
 
       if (!body.ProjectTitle || !body.Email) {
-        alert("프로젝트 제목과 이메일은 꼭 적어줘.");
+        alert("프로젝트 제목과 이메일은 꼭 적어주세요.");
         return;
       }
 
@@ -174,14 +173,14 @@
 
         const json = await res.json();
         if (json.ok) {
-          alert("AI 스틸컷 요청이 접수됐어!");
+          alert("AI 스틸컷 요청이 접수되었습니다!");
           document.getElementById("ai-form").reset();
         } else {
-          alert("서버에서 오류가 났어. 잠시 후 다시 시도해줘.");
+          alert("서버에서 오류가 났습니다. 잠시 후 다시 시도해 주세요.");
         }
       } catch (e) {
         console.error(e);
-        alert("연결에 문제가 있어. 인터넷이나 서버를 확인해줘.");
+        alert("연결에 문제가 있습니다. 인터넷이나 서버 상태를 확인해 주세요.");
       }
     });
   </script>

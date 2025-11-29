@@ -3,73 +3,168 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>장비 예약 – TRUST PRODUCTION</title>
+  <title>Gear Reservation – TRUST PRODUCTION</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <div class="logo">TRUST PRODUCTION</div>
-    <nav>
-      <a href="index.html">HOME</a>
-      <a href="equipment.html">장비 예약</a>
-      <a href="ai-stillcut.html">AI 스틸컷</a>
-    </nav>
-  </header>
+  <div class="app-shell">
+    <header>
+      <div class="logo-wrap">
+        <div class="logo-mark"><span></span></div>
+        <div class="logo-text">
+          <div class="logo-text-main">TRUST PRODUCTION</div>
+          <div class="logo-text-sub">GEAR RESERVATION</div>
+        </div>
+      </div>
+      <nav>
+        <a href="index.html">HOME</a>
+        <a href="equipment.html" class="active">GEAR</a>
+        <a href="ai-stillcut.html">AI STILLCUT</a>
+      </nav>
+    </header>
 
-  <main>
-    <section class="card">
-      <h1>장비 예약</h1>
-      <p>기본 장비 패키지 또는 커스텀 장비 요청을 입력해주세요.</p>
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="hero-pill">
+          <span class="hero-pill-dot"></span>
+          Gear · Car · 1인 촬영 세트
+        </div>
+        <h1 class="hero-title">
+          “장비는 알아서 챙겼어.”<br />
+          라고 말할 수 있는 하루.
+        </h1>
+        <p class="hero-desc">
+          FX3, 짐벌, 조명, 간단한 오디오 세트까지.  
+          인원보다 감도와 안정감이 중요한 촬영을 위한 예약 폼이야.
+        </p>
+        <div class="hero-meta">
+          <span>SONY FX3 · 짐벌 · LED 조명</span>
+          <span>Gear Reservation DB 연동</span>
+        </div>
+      </div>
     </section>
 
-    <section class="card">
-      <form id="equip-form">
+    <main>
+      <section class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">장비 예약 폼</div>
+            <div class="card-sub">
+              실제 촬영 날짜와 프로젝트명을 정확히 적어줘야 스케줄 확인이 쉬워.
+            </div>
+          </div>
+        </div>
 
-        <label>프로젝트명</label>
-        <input id="ProjectName" placeholder="예: 브랜드 필름 촬영" />
+        <div class="form-meta-grid" style="margin-bottom: 14px;">
+          <div class="form-meta-item">
+            <span class="label">예시 패키지</span>
+            <span class="value">FX3 + 24–105 + 짐벌 + 1-Light</span>
+          </div>
+          <div class="form-meta-item">
+            <span class="label">운영 형태</span>
+            <span class="value">1인 촬영 / 2인 팀 모두 가능</span>
+          </div>
+        </div>
 
-        <label>대여자 이름</label>
-        <input id="RenterName" placeholder="예: 홍길동" />
+        <form id="equip-form">
+          <div class="input-group">
+            <label>프로젝트명 (ProjectName)</label>
+            <input
+              id="ProjectName"
+              placeholder="예: 브랜드 필름, 패션 룩북, 웨딩 하이라이트"
+            />
+          </div>
 
-        <label>연락처</label>
-        <input id="Contact" placeholder="010-0000-0000" />
+          <div class="form-two-cols">
+            <div class="input-group">
+              <label>대여자 이름 (RenterName)</label>
+              <input id="RenterName" placeholder="예: 홍길동" />
+            </div>
 
-        <label>장비 구성 (Gear)</label>
-        <input id="Gear" placeholder="FX3 + 짐벌 + 라이트" />
+            <div class="input-group">
+              <label>연락처 (Contact)</label>
+              <input id="Contact" placeholder="010-0000-0000" />
+            </div>
+          </div>
 
-        <label>촬영 날짜</label>
-        <input id="Date" type="date" />
+          <div class="input-group">
+            <label>장비 구성 (Gear)</label>
+            <input
+              id="Gear"
+              placeholder="예: FX3 + 짐벌 + 조명 2개 + 무선 마이크"
+            />
+          </div>
 
-        <label>메모</label>
-        <textarea id="Memo" placeholder="요청 사항"></textarea>
+          <div class="form-two-cols">
+            <div class="input-group">
+              <label>촬영 날짜 (Date)</label>
+              <input id="Date" type="date" />
+            </div>
+            <div class="input-group">
+              <label>상태(Status)는 노션에서 직접 관리</label>
+              <input
+                disabled
+                value="Status / AutoCreated는 시스템에서 처리"
+              />
+            </div>
+          </div>
 
-        <button type="button" id="equip-submit">장비 예약하기</button>
-      </form>
-    </section>
-  </main>
+          <div class="input-group">
+            <label>메모 (Memo)</label>
+            <textarea
+              id="Memo"
+              placeholder="픽업/반납 시간, 차량, 공간 정보 등을 자유롭게 적어줘."
+            ></textarea>
+          </div>
+
+          <button type="button" id="equip-submit">장비 예약하기</button>
+          <p class="footer-note">
+            제출 시 Notion Gear Reservation DB에 바로 기록돼.  
+            스케줄 충돌 시 개별 연락을 줄게.
+          </p>
+        </form>
+      </section>
+    </main>
+  </div>
 
   <script>
-    document.getElementById("equip-submit").addEventListener("click", async () => {
-      const body = {
-        Title: "Gear Reservation",
-        ProjectName: ProjectName.value,
-        RenterName: RenterName.value,
-        Contact: Contact.value,
-        Gear: Gear.value,
-        Date: Date.value,
-        Memo: Memo.value
-      };
+    document
+      .getElementById("equip-submit")
+      .addEventListener("click", async () => {
+        const body = {
+          Title: "Gear Reservation",
+          ProjectName: ProjectName.value,
+          RenterName: RenterName.value,
+          Contact: Contact.value,
+          Gear: Gear.value,
+          Date: Date.value,
+          Memo: Memo.value,
+        };
 
-      const res = await fetch("/.netlify/functions/equipment-reserve", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        if (!body.ProjectName || !body.RenterName || !body.Contact) {
+          alert("프로젝트명 / 대여자 / 연락처는 꼭 입력해줘.");
+          return;
+        }
+
+        try {
+          const res = await fetch("/.netlify/functions/equipment-reserve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+          });
+
+          const json = await res.json();
+          if (json.ok) {
+            alert("장비 예약이 접수됐어. 노션에서 바로 확인할 수 있어!");
+            document.getElementById("equip-form").reset();
+          } else {
+            alert("서버에서 오류가 났어. 잠시 후 다시 시도해줘.");
+          }
+        } catch (e) {
+          console.error(e);
+          alert("연결에 문제가 있어. 인터넷이나 서버를 확인해줘.");
+        }
       });
-
-      const json = await res.json();
-      if (json.ok) alert("장비 예약 완료!");
-      else alert("오류 발생!");
-    });
   </script>
 </body>
 </html>
